@@ -1,0 +1,581 @@
+{
+  "_说明": "上海注册公司.com 日更选题池。每天自动取「status=未用」的第一条；写完后自动标记 used 并记录日期。",
+  "_内容红线": [
+    "不写具体金额（费用只讲构成与判断方法）",
+    "不点名任何代办机构/园区/银行",
+    "政策类只写「去哪查、怎么判断」",
+    "每篇可提及宝山萧云路501号实体地址与电话17652523536",
+    "每篇必带免责声明（构建脚本统一注入）"
+  ],
+  "_SEO规则": {
+    "主词": "上海注册公司",
+    "主词密度": "0.3%-0.6%（每 2000 字约 6-12 次，自然融入）",
+    "长尾词": "每篇 1 个核心长尾 + 2-3 个变体，出现在 H1/首段/H2/FAQ",
+    "标题长度": "H1 口语问句不限；seo_title ≤30 全角字（不含站点后缀）",
+    "描述": "60-78 全角字，含主词",
+    "正文字数": "1800-2500 字"
+  },
+  "topics": [
+    {
+      "id": 1,
+      "cluster": "fee",
+      "core": "上海注册公司要花多少钱",
+      "slug": "zhuce-company-fee-amount",
+      "angle": "费用构成拆解+自己算账的方法",
+      "status": "已用",
+      "used_date": "2026-09-27"
+    },
+    {
+      "id": 2,
+      "cluster": "fee",
+      "core": "上海注册公司代办一般多少钱",
+      "slug": "daiban-fee-market",
+      "angle": "代办费为什么差这么多+识别报价陷阱",
+      "status": "未用"
+    },
+    {
+      "id": 3,
+      "cluster": "fee",
+      "core": "上海注册公司每年要交什么钱",
+      "slug": "annual-cost",
+      "angle": "年检/记账/报税的刚性支出构成",
+      "status": "未用"
+    },
+    {
+      "id": 4,
+      "cluster": "fee",
+      "core": "上海注册公司零申报要花钱吗",
+      "slug": "zero-declaration-cost",
+      "angle": "零申报的费用与风险双向说明",
+      "status": "未用"
+    },
+    {
+      "id": 5,
+      "cluster": "fee",
+      "core": "上海注册公司刻章要收费吗",
+      "slug": "seal-fee",
+      "angle": "刻章环节的费用构成与常见附加项",
+      "status": "未用"
+    },
+    {
+      "id": 6,
+      "cluster": "fee",
+      "core": "上海注册公司注册资本要实缴吗",
+      "slug": "capital-paid-in",
+      "angle": "认缴制怎么理解+认缴额的责任含义",
+      "status": "未用"
+    },
+    {
+      "id": 7,
+      "cluster": "fee",
+      "core": "上海注册公司银行开户要多少钱",
+      "slug": "bank-account-fee",
+      "angle": "开户费用的构成+账户管理费怎么理解",
+      "status": "未用"
+    },
+    {
+      "id": 8,
+      "cluster": "fee",
+      "core": "上海注册公司代理记账一年多少钱",
+      "slug": "bookkeeping-yearly-fee",
+      "angle": "代账费用区间的影响因素",
+      "status": "未用"
+    },
+    {
+      "id": 9,
+      "cluster": "fee",
+      "core": "上海注册公司费用可以砍价吗",
+      "slug": "fee-negotiation",
+      "angle": "哪些费用有弹性、哪些没有",
+      "status": "未用"
+    },
+    {
+      "id": 10,
+      "cluster": "fee",
+      "core": "上海注册公司免费代办靠谱吗",
+      "slug": "free-agency-trap",
+      "angle": "免费模式背后的商业逻辑与判断方法",
+      "status": "未用"
+    },
+    {
+      "id": 11,
+      "cluster": "process",
+      "core": "上海注册公司流程需要几天",
+      "slug": "process-duration",
+      "angle": "各环节耗时明细与卡点",
+      "status": "未用"
+    },
+    {
+      "id": 12,
+      "cluster": "process",
+      "core": "上海注册公司核名怎么操作",
+      "slug": "name-check-apply",
+      "angle": "核名的规则、驳回原因、提高通过率",
+      "status": "未用"
+    },
+    {
+      "id": 13,
+      "cluster": "process",
+      "core": "上海注册公司经营范围怎么写",
+      "slug": "business-scope-write",
+      "angle": "一般项目/许可项目的区别与写法",
+      "status": "未用"
+    },
+    {
+      "id": 14,
+      "cluster": "process",
+      "core": "上海注册公司网上怎么办理",
+      "slug": "online-apply",
+      "angle": "一网通办操作路径与常见失败原因",
+      "status": "未用"
+    },
+    {
+      "id": 15,
+      "cluster": "process",
+      "core": "上海注册公司电子签名怎么弄",
+      "slug": "e-signature",
+      "angle": "电子签名的操作步骤与失败排查",
+      "status": "未用"
+    },
+    {
+      "id": 16,
+      "cluster": "process",
+      "core": "上海注册公司提交后被驳回怎么办",
+      "slug": "rejected-fix",
+      "angle": "常见驳回类型与逐项处理办法",
+      "status": "未用"
+    },
+    {
+      "id": 17,
+      "cluster": "process",
+      "core": "上海注册公司法人必须到场吗",
+      "slug": "legal-person-attend",
+      "angle": "哪些环节必须本人、哪些可代办",
+      "status": "未用"
+    },
+    {
+      "id": 18,
+      "cluster": "process",
+      "core": "上海注册公司股东可以一个人吗",
+      "slug": "single-shareholder",
+      "angle": "一人公司的规则与注意事项",
+      "status": "未用"
+    },
+    {
+      "id": 19,
+      "cluster": "process",
+      "core": "上海注册公司拿到执照后要做什么",
+      "slug": "after-license",
+      "angle": "领照后的必办事项清单与顺序",
+      "status": "未用"
+    },
+    {
+      "id": 20,
+      "cluster": "process",
+      "core": "上海注册公司多久能拿到营业执照",
+      "slug": "license-wait-time",
+      "angle": "审核周期构成+如何合理预期",
+      "status": "未用"
+    },
+    {
+      "id": 21,
+      "cluster": "material",
+      "core": "上海注册公司需要什么材料",
+      "slug": "material-list",
+      "angle": "材料清单逐项拆解+退回原因",
+      "status": "未用"
+    },
+    {
+      "id": 22,
+      "cluster": "material",
+      "core": "上海注册公司没有房产证能注册吗",
+      "slug": "no-property-cert",
+      "angle": "不同地址来源对应的材料要求",
+      "status": "未用"
+    },
+    {
+      "id": 23,
+      "cluster": "material",
+      "core": "上海注册公司公司章程怎么写",
+      "slug": "articles-of-association",
+      "angle": "章程必备条款+易忽略项",
+      "status": "未用"
+    },
+    {
+      "id": 24,
+      "cluster": "material",
+      "core": "上海注册公司股东身份证要原件吗",
+      "slug": "id-original-required",
+      "angle": "身份材料的提交形式与常见问题",
+      "status": "未用"
+    },
+    {
+      "id": 25,
+      "cluster": "material",
+      "core": "上海注册公司住宅地址能用吗",
+      "slug": "residential-address",
+      "angle": "住改商的政策口径与判断方法",
+      "status": "未用"
+    },
+    {
+      "id": 26,
+      "cluster": "material",
+      "core": "上海注册公司注册地址证明怎么准备",
+      "slug": "address-proof",
+      "angle": "自有/租赁/挂靠三种地址的材料差异",
+      "status": "未用"
+    },
+    {
+      "id": 27,
+      "cluster": "material",
+      "core": "上海注册公司法定代表人有什么要求",
+      "slug": "legal-person-requirement",
+      "angle": "任职资格与限制情形",
+      "status": "未用"
+    },
+    {
+      "id": 28,
+      "cluster": "material",
+      "core": "上海注册公司名字可以用英文吗",
+      "slug": "english-name",
+      "angle": "名称规则与字号选择技巧",
+      "status": "未用"
+    },
+    {
+      "id": 29,
+      "cluster": "material",
+      "core": "上海注册公司需要几个股东",
+      "slug": "shareholder-count",
+      "angle": "股东数量选择对经营的影响",
+      "status": "未用"
+    },
+    {
+      "id": 30,
+      "cluster": "material",
+      "core": "上海注册公司监事需要几个人",
+      "slug": "supervisor-role",
+      "angle": "监事制度的作用与设置方式",
+      "status": "未用"
+    },
+    {
+      "id": 31,
+      "cluster": "address",
+      "core": "上海注册公司没有地址怎么办",
+      "slug": "no-address-solution",
+      "angle": "三条路径对比与选择方法",
+      "status": "未用"
+    },
+    {
+      "id": 32,
+      "cluster": "address",
+      "core": "上海园区注册地址挂靠靠谱吗",
+      "slug": "park-address-reliable",
+      "angle": "判断园区是否正规的核查清单",
+      "status": "未用"
+    },
+    {
+      "id": 33,
+      "cluster": "address",
+      "core": "上海注册公司地址挂靠多少钱",
+      "slug": "address-fee-range",
+      "angle": "地址费用的影响因素",
+      "status": "未用"
+    },
+    {
+      "id": 34,
+      "cluster": "address",
+      "core": "上海注册公司地址会被查吗",
+      "slug": "address-inspection",
+      "angle": "核查情形与合规应对方法",
+      "status": "未用"
+    },
+    {
+      "id": 35,
+      "cluster": "address",
+      "core": "上海注册公司集中登记地是什么",
+      "slug": "central-registration",
+      "angle": "集中登记地的政策概念与适用范围",
+      "status": "未用"
+    },
+    {
+      "id": 36,
+      "cluster": "address",
+      "core": "上海哪些行业不能用挂靠地址",
+      "slug": "industry-restriction",
+      "angle": "受限行业类型与判断依据",
+      "status": "未用"
+    },
+    {
+      "id": 37,
+      "cluster": "address",
+      "core": "上海注册公司地址可以变更吗",
+      "slug": "address-change",
+      "angle": "变更流程与注意事项",
+      "status": "未用"
+    },
+    {
+      "id": 38,
+      "cluster": "address",
+      "core": "上海注册公司跨区迁址怎么办理",
+      "slug": "cross-district-move",
+      "angle": "迁址的税费与流程差异",
+      "status": "未用"
+    },
+    {
+      "id": 39,
+      "cluster": "address",
+      "core": "上海园区返税政策是怎么回事",
+      "slug": "tax-refund-policy",
+      "angle": "返税政策的性质与核实方法",
+      "status": "未用"
+    },
+    {
+      "id": 40,
+      "cluster": "address",
+      "core": "上海注册公司虚拟地址合法吗",
+      "slug": "virtual-address-legal",
+      "angle": "合法性边界与合规使用方式",
+      "status": "未用"
+    },
+    {
+      "id": 41,
+      "cluster": "industry",
+      "core": "上海注册贸易公司怎么办理",
+      "slug": "trade-company",
+      "angle": "贸易类的经营范围与资质要求",
+      "status": "未用"
+    },
+    {
+      "id": 42,
+      "cluster": "industry",
+      "core": "上海注册科技公司流程",
+      "slug": "tech-company",
+      "angle": "科技类的常见经营范围与优惠核实",
+      "status": "未用"
+    },
+    {
+      "id": 43,
+      "cluster": "industry",
+      "core": "上海注册餐饮公司要什么条件",
+      "slug": "food-company",
+      "angle": "许可类行业的前置要求",
+      "status": "未用"
+    },
+    {
+      "id": 44,
+      "cluster": "industry",
+      "core": "上海注册电商公司怎么弄",
+      "slug": "ecommerce-company",
+      "angle": "电商类的地址与经营范围要点",
+      "status": "未用"
+    },
+    {
+      "id": 45,
+      "cluster": "industry",
+      "core": "上海注册劳务派遣公司条件",
+      "slug": "labor-dispatch",
+      "angle": "许可资质与注册资本要求",
+      "status": "未用"
+    },
+    {
+      "id": 46,
+      "cluster": "industry",
+      "core": "上海注册文化传媒公司流程",
+      "slug": "media-company",
+      "angle": "传媒类的许可与备案要求",
+      "status": "未用"
+    },
+    {
+      "id": 47,
+      "cluster": "industry",
+      "core": "上海注册咨询公司经营范围",
+      "slug": "consulting-company",
+      "angle": "咨询类的经营范围写法",
+      "status": "未用"
+    },
+    {
+      "id": 48,
+      "cluster": "industry",
+      "core": "上海注册进出口公司流程",
+      "slug": "import-export",
+      "angle": "进出口权的办理链条",
+      "status": "未用"
+    },
+    {
+      "id": 49,
+      "cluster": "industry",
+      "core": "上海注册物流公司要什么资质",
+      "slug": "logistics-company",
+      "angle": "运输类许可与合规要点",
+      "status": "未用"
+    },
+    {
+      "id": 50,
+      "cluster": "industry",
+      "core": "上海注册教育科技公司注意什么",
+      "slug": "edu-tech",
+      "angle": "教育类的合规边界",
+      "status": "未用"
+    },
+    {
+      "id": 51,
+      "cluster": "compare",
+      "core": "上海个体户和公司哪个好",
+      "slug": "individual-vs-company",
+      "angle": "五维度对比与人群适配",
+      "status": "未用"
+    },
+    {
+      "id": 52,
+      "cluster": "compare",
+      "core": "上海注册个体户要什么材料",
+      "slug": "individual-materials",
+      "angle": "个体户的材料与流程差异",
+      "status": "未用"
+    },
+    {
+      "id": 53,
+      "cluster": "compare",
+      "core": "上海有限公司和股份公司区别",
+      "slug": "ltd-vs-joint-stock",
+      "angle": "两种公司形态的核心差异",
+      "status": "未用"
+    },
+    {
+      "id": 54,
+      "cluster": "compare",
+      "core": "上海注册分公司和子公司区别",
+      "slug": "branch-vs-subsidiary",
+      "angle": "责任承担与税务差异",
+      "status": "未用"
+    },
+    {
+      "id": 55,
+      "cluster": "compare",
+      "core": "上海小规模和一般纳税人区别",
+      "slug": "small-vs-general-taxpayer",
+      "angle": "纳税身份的选择逻辑",
+      "status": "未用"
+    },
+    {
+      "id": 56,
+      "cluster": "compare",
+      "core": "上海注册公司自己办还是找代办",
+      "slug": "diy-vs-agency",
+      "angle": "两种方式的成本与风险对比",
+      "status": "未用"
+    },
+    {
+      "id": 57,
+      "cluster": "compare",
+      "core": "上海注册内资和外资公司区别",
+      "slug": "domestic-vs-foreign",
+      "angle": "外资注册的额外要求",
+      "status": "未用"
+    },
+    {
+      "id": 58,
+      "cluster": "compare",
+      "core": "上海注册工作室和公司区别",
+      "slug": "studio-vs-company",
+      "angle": "工作室形态的适用场景",
+      "status": "未用"
+    },
+    {
+      "id": 59,
+      "cluster": "compare",
+      "core": "上海注册公司认缴和实缴区别",
+      "slug": "subscribed-vs-paid",
+      "angle": "出资方式的选择与风险",
+      "status": "未用"
+    },
+    {
+      "id": 60,
+      "cluster": "compare",
+      "core": "上海注册公司个人独资和有限公司区别",
+      "slug": "sole-proprietorship-vs-ltd",
+      "angle": "责任与税负的核心差异",
+      "status": "未用"
+    },
+    {
+      "id": 61,
+      "cluster": "maintain",
+      "core": "上海注册公司不经营要报税吗",
+      "slug": "no-business-tax",
+      "angle": "零申报的义务与误区",
+      "status": "未用"
+    },
+    {
+      "id": 62,
+      "cluster": "maintain",
+      "core": "上海注册公司怎么注销",
+      "slug": "company-deregistration",
+      "angle": "注销流程与简易注销条件",
+      "status": "未用"
+    },
+    {
+      "id": 63,
+      "cluster": "maintain",
+      "core": "上海公司工商年报怎么报",
+      "slug": "annual-report",
+      "angle": "年报的时间节点与填报要点",
+      "status": "未用"
+    },
+    {
+      "id": 64,
+      "cluster": "maintain",
+      "core": "上海注册公司长期不经营会怎样",
+      "slug": "long-term-inactive",
+      "angle": "异常名录的成因与解除方法",
+      "status": "未用"
+    },
+    {
+      "id": 65,
+      "cluster": "maintain",
+      "core": "上海公司怎么变更法人",
+      "slug": "change-legal-person",
+      "angle": "变更流程与所需材料",
+      "status": "未用"
+    },
+    {
+      "id": 66,
+      "cluster": "maintain",
+      "core": "上海公司股权转让怎么办理",
+      "slug": "equity-transfer",
+      "angle": "转让流程与税务处理",
+      "status": "未用"
+    },
+    {
+      "id": 67,
+      "cluster": "maintain",
+      "core": "上海注册公司怎么开对公账户",
+      "slug": "corporate-account",
+      "angle": "开户难度与准备要点",
+      "status": "未用"
+    },
+    {
+      "id": 68,
+      "cluster": "maintain",
+      "core": "上海公司发票怎么申请",
+      "slug": "invoice-apply",
+      "angle": "发票申领流程与类型选择",
+      "status": "未用"
+    },
+    {
+      "id": 69,
+      "cluster": "maintain",
+      "core": "上海注册公司后多久要报税",
+      "slug": "first-tax-filing",
+      "angle": "首次报税的时间要求",
+      "status": "未用"
+    },
+    {
+      "id": 70,
+      "cluster": "maintain",
+      "core": "上海公司被列入经营异常怎么办",
+      "slug": "abnormal-list-fix",
+      "angle": "异常类型与移除步骤",
+      "status": "未用"
+    }
+  ]
+}

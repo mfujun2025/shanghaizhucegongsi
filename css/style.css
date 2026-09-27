@@ -161,3 +161,42 @@ footer .nav-f a{font-size:13px}
 
 /* 手机端给悬浮条留位置 */
 @media(max-width:860px){body{padding-bottom:50px}}
+
+/* ============================================
+   文章页 / 文章目录页专用样式
+   ============================================ */
+.article-meta{font-size:13px;color:var(--sub);padding-bottom:16px;margin-bottom:22px;border-bottom:1px solid var(--line)}
+
+/* 页内目录 */
+.toc{background:#fafbfc;border:1px solid var(--line);border-radius:10px;padding:18px 22px;margin:0 0 26px}
+.toc-title{font-size:14px;font-weight:800;margin-bottom:10px;color:var(--ink)}
+.toc-list{display:flex;flex-wrap:wrap;gap:8px 16px}
+.toc-list a{font-size:14px;color:var(--brand);text-decoration:none;border-bottom:1px dashed #e0b9bb;line-height:1.7}
+.toc-list a:hover{color:var(--brand2);border-bottom-color:var(--brand2)}
+
+/* 文章内 FAQ */
+.article-faq{margin-top:8px}
+.article .faq-item{background:#fff;border:1px solid var(--line);border-radius:9px;margin-bottom:10px;overflow:hidden}
+.article .faq-q{cursor:pointer;padding:14px 18px;font-weight:700;font-size:15px;list-style:none;position:relative;padding-right:42px}
+.article .faq-q::-webkit-details-marker{display:none}
+.article .faq-q::after{content:"+";position:absolute;right:18px;top:50%;transform:translateY(-50%);font-size:19px;color:var(--brand);font-weight:400}
+.article .faq-item[open] .faq-q::after{content:"−"}
+.article .faq-a{padding:0 18px 15px;font-size:14.5px;color:#444;line-height:1.9}
+
+/* 表格窄屏横滑容器 */
+.table-scroll{overflow-x:auto;margin:20px 0;-webkit-overflow-scrolling:touch}
+.table-scroll table{margin:0;min-width:460px}
+
+/* 文章目录页 */
+.art-group{margin-bottom:44px}
+.art-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.art-card{display:block;background:#fff;border:1px solid var(--line);border-radius:11px;padding:20px 22px;text-decoration:none;transition:.18s}
+.art-card:hover{border-color:var(--brand);box-shadow:0 4px 18px rgba(200,22,29,.08);transform:translateY(-2px)}
+.art-t{font-size:15.5px;font-weight:700;color:var(--ink);line-height:1.55;margin-bottom:8px}
+.art-b{font-size:13.5px;color:var(--sub);line-height:1.75}
+
+/* 文章目录页：收紧首屏留白（pagehead 自带下边距，这里别再叠） */
+.art-hub{padding-top:30px;padding-bottom:40px}
+.art-hub .art-group:first-child{margin-top:0}
+.art-hub .sec-title{text-align:left}
+.art-hub .sec-sub{text-align:left;margin-bottom:18px}

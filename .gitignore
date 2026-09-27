@@ -8,3 +8,5 @@ config.local.json
 
 # wrangler 本地缓存
 .wrangler/
+
+# 文章构建中间产物不需要（_content 是源，articles 是产物，两者都要提交）

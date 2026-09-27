@@ -115,6 +115,9 @@ PAGES = {
     "faq/": ("常见问题", "上海注册公司常见问题30问｜答疑汇总",
              "上海注册公司常见问题汇总：法人是否必须到场、住宅能不能注册、注册资本写多少合适、每年要固定花哪些钱、代办和自己办的区别，逐条作答。",
              "常见问题解答", "办之前最容易困惑的问题都在这里"),
+    "articles/": ("注册公司攻略", "上海注册公司办理攻略｜实务长文合集",
+                  "上海注册公司办理攻略合集：费用构成、办理流程、材料清单、地址挂靠、行业资质、形态对比、注册后事务，按主题分组，每篇讲清一个具体问题。",
+                  "上海注册公司办理攻略", "按主题分组，每篇只讲清一个具体问题"),
     "women/": ("关于我们", "关于我们｜上海注册公司.com",
                "上海注册公司.com 由上海宝山本地团队运营，专注公司注册咨询与园区资源对接，地址：上海市宝山区萧云路501号，电话17652523536，欢迎来电咨询。",
                "关于我们", "先帮你把情况理清楚，再谈办不办"),
@@ -129,10 +132,18 @@ _FAQ_REGISTRY = {}
 
 
 def rel(path_from, target):
-    """计算从 path_from 页面到 target 的相对链接（用于子目录页面）"""
+    """计算从 path_from 页面到 target 的相对链接
+
+    按目录深度算，不能写死一个 "../"：
+      ""                    → 0 层
+      "feiyong/"            → 1 层
+      "articles/<slug>/"    → 2 层  ← 文章页在这里
+    """
     if path_from == "":
         return target
-    return "../" + target
+    # 目录层数 = 去掉尾部斜杠后，路径里的 / 个数
+    depth = path_from.rstrip("/").count("/") + 1
+    return "../" * depth + target
 
 
 def build_head(page_path, title, desc, extra_jsonld=""):
@@ -183,6 +194,7 @@ def build_header(page_path):
   <div class="wrap nav">
     <a class="logo" href="{home}">上海注册公司<small>营业执照 · 地址挂靠 · 财税一站式</small></a>
     <nav class="navlinks">
+      <a href="{p('articles/')}">攻略</a>
       <a href="{p('feiyong/')}">费用</a>
       <a href="{p('liucheng/')}">流程</a>
       <a href="{p('cailiao/')}">材料</a>
@@ -244,6 +256,7 @@ def build_footer(page_path):
 <footer>
   <div>上海注册公司.com · 上海注册公司.cn · 上海注册公司.中国</div>
   <div class="nav-f">
+    <a href="{p('articles/')}">办理攻略</a>
     <a href="{p('feiyong/')}">费用明细</a>
     <a href="{p('liucheng/')}">办理流程</a>
     <a href="{p('cailiao/')}">材料清单</a>

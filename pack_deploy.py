@@ -33,10 +33,12 @@ ROOT_FILES = [
     "verify-baidu.txt",
 ]
 
-# 需要整体拷贝的目录（页面 + 资源）
+# 需要整体拷贝的目录（页面 + 资源 + 文章）
+# ⚠️ 新增内容目录时记得加到这里，否则会静默漏发（articles 就漏过一次）
 DIRS = [
     "css",
     "js",
+    "articles",          # 文章目录页 + 每篇文章（日更产出的都在这）
     "feiyong", "liucheng", "cailiao", "dizhi-guakao", "shijian",
     "gezhong", "yinhang", "dailijizhang", "wangshang", "faq", "women",
 ]
@@ -97,6 +99,22 @@ def main():
         for p in leaked:
             print("   - %s" % p)
             os.remove(p)
+
+    # 完整性检查：站点里存在的「内容目录」是否都进了产物
+    # 防的是"新增目录忘了加白名单"→ 静默漏发（articles 就这样漏过一次）
+    missing_dirs = []
+    for d in sorted(os.listdir(BASE)):
+        p = os.path.join(BASE, d)
+        if not os.path.isdir(p):
+            continue
+        if d in EXCLUDE_NAMES or d.startswith((".", "_")):
+            continue
+        if d not in DIRS:
+            missing_dirs.append(d)
+    if missing_dirs:
+        print("\n⚠️  以下目录存在于站点但不在发布白名单里，可能被漏发：")
+        for d in missing_dirs:
+            print("   - %s/  （确认是否需要上线；需要就加进 DIRS）" % d)
 
     print("\n完成，共 %d 项 → %s" % (copied, DEST))
     print("部署命令（在 site/ 目录执行）：")

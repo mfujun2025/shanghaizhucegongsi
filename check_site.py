@@ -100,7 +100,13 @@ def check_elements(pages):
 
 
 def check_wordcount(pages):
-    """正文内容字数（去掉标签）"""
+    """正文内容字数（去掉标签）
+
+    阈值按页面类型分：
+      · 文章页 articles/<slug>/  → 正文 ≥1500（长文，撑长尾覆盖）
+      · 导航型页面（首页/目录页）→ 不设下限（本来就短）
+      · 其他内页               → ≥600
+    """
     for page in pages:
         rel = os.path.relpath(page, BASE).replace("\\", "/")
         with open(page, encoding="utf-8") as f:
@@ -110,11 +116,15 @@ def check_wordcount(pages):
         seg = m.group(1) if m else html
         text = re.sub(r"<[^>]+>", "", seg)
         text = re.sub(r"\s+", "", text)
-        # 减去重复的导航/页脚噪音：粗略统计
         cnt = len(re.findall(r"[\u4e00-\u9fff]", text))
-        if rel != "index.html" and cnt < 600:
+
+        is_article = re.match(r"^articles/[^/]+/index\.html$", rel)
+        is_hub = rel in ("index.html", "articles/index.html")
+        if is_article and cnt < 1500:
+            WARNS.append(f"[文章正文偏短 {cnt} 字，目标 ≥1500] {rel}")
+        elif not is_hub and not is_article and cnt < 600:
             WARNS.append(f"[正文偏短 {cnt} 字] {rel}")
-        print(f"    {rel:32s} 正文中文字数 ≈ {cnt}")
+        print(f"    {rel:38s} 正文中文字数 ≈ {cnt}")
 
 
 def main():

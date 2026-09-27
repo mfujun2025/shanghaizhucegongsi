@@ -4,5 +4,7 @@ Allow: /
 # 站长平台验证文件对搜索无价值，不必抓取
 Disallow: /verify-baidu.txt
 Disallow: /baidu_verify_
+Disallow: /_content/
+Disallow: /_topics/
 
 Sitemap: https://xn--fhq55fzcr6i6s1crya.com/sitemap.xml
