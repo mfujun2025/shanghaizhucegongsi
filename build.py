@@ -13,6 +13,7 @@
 """
 import os
 import json
+import hashlib
 import html as html_mod
 from datetime import date
 
@@ -21,6 +22,37 @@ SITE_URL = "https://xn--fhq55fzcr6i6s1crya.com"
 PHONE = "17652523536"
 PHONE_TEL = "17652523536"
 BUILD_DATE = date.today().isoformat()
+
+# ---------------------------------------------------------------
+# 静态资源指纹（内容哈希）
+# ---------------------------------------------------------------
+# 为什么不直接叫 main.js：
+#   旧版 main.js 是「演示模式」（弹提示但不发送），而 Cloudflare Pages 给它
+#   发的是 Cache-Control: public, max-age=14400（4 小时）。用户浏览器缓存了旧版，
+#   即使站点已更新，用户点提交也会「看着成功、实际没发出去」——真实事故。
+#   加内容哈希后，文件内容一变，URL 就变，彻底绕开旧缓存。
+_AST_CACHE = {}
+
+
+def asset_ver(rel_path):
+    """按文件内容算 8 位哈希；同一份内容多次调用结果稳定"""
+    if rel_path in _AST_CACHE:
+        return _AST_CACHE[rel_path]
+    full = os.path.join(BASE_DIR, rel_path)
+    try:
+        with open(full, "rb") as f:
+            h = hashlib.sha256(f.read()).hexdigest()[:8]
+    except OSError:
+        h = ""
+    _AST_CACHE[rel_path] = h
+    return h
+
+
+def asset_url(page_path, rel_path):
+    """带指纹的资源 URL（相对当前页）。无指纹时退化为原路径，不破坏构建"""
+    v = asset_ver(rel_path)
+    suffix = ("?v=" + v) if v else ""
+    return rel(page_path, rel_path) + suffix
 
 # ---------------------------------------------------------------
 # 询单接收端配置（优先级：config.local.json > 环境变量 > 空=演示模式）
@@ -50,47 +82,50 @@ SITE_NAME = "上海注册公司.com"
 # 站点地图：路径 → (导航标题, 页面标题, meta description, 页面 h1, 副标题)
 # ---------------------------------------------------------------
 PAGES = {
-    "": ("首页", "上海注册公司_营业执照代办_园区地址挂靠",
-         "上海注册公司怎么办？费用、流程、材料、地址挂靠一次说清。宝山实体办公，电话17652523536，免费帮你判断该注册个体户还是有限公司。",
+    "": ("首页", "上海注册公司｜营业执照代办｜园区地址挂靠",
+         "上海注册公司怎么办？费用、流程、材料、地址挂靠一次说清。宝山实体办公，电话17652523536，先免费帮你判断该注册个体户还是有限公司，再谈办不办。",
          None, None),
-    "feiyong/": ("费用", "上海注册公司费用明细_钱花在哪几块",
-                 "上海注册公司费用由哪些部分构成？政府规费、注册地址费、代办服务费、后续记账费逐项拆解，教你看懂报价、避免隐藏收费。",
+    "feiyong/": ("费用", "上海注册公司费用明细｜钱花在哪几块",
+                 "上海注册公司费用由哪些部分构成？政府规费、注册地址费、代办服务费、后续记账费逐项拆开讲，教你看懂报价单、避开「低价引流再补收」的套路。",
                  "上海注册公司费用，到底花在哪", "市场上报价差很多，先看懂钱花在哪，才不会被绕"),
-    "liucheng/": ("流程", "上海注册公司全流程_7步办理指引",
-                 "上海注册公司全流程7步详解：核名、经营范围、注册地址、提交材料、领取执照、税务开户、做账报税，每步注意事项一次说清。",
+    "liucheng/": ("流程", "上海注册公司全流程｜7步办理指引",
+                 "上海注册公司全流程7步详解：核名、经营范围、注册地址、提交材料、领取执照、税务开户、做账报税，每一步要做什么、容易卡在哪，一次说清。",
                  "上海注册公司全流程", "现在基本可以全程网上办理，走「一网通办」"),
-    "cailiao/": ("材料", "上海注册公司需要什么材料_清单明细",
-                 "上海注册公司需要准备哪些材料？名称、经营范围、地址证明、股东身份材料、章程等逐项列清，附常见被退回的原因。",
+    "cailiao/": ("材料", "上海注册公司需要什么材料｜清单明细",
+                 "上海注册公司需要准备哪些材料？名称、经营范围、地址证明、股东身份材料、公司章程逐项列清，并说明哪些材料最容易因为小细节被退回。",
                  "上海注册公司需要准备什么材料", "提前备齐，能少跑好几趟"),
-    "dizhi-guakao/": ("地址挂靠", "上海园区地址挂靠_靠不靠谱怎么判断",
-                 "上海注册公司没有地址怎么办？园区地址挂靠是什么、怎么判断靠不靠谱、哪些行业不能挂靠，一次说清判断方法。",
+    "dizhi-guakao/": ("地址挂靠", "上海园区地址挂靠｜靠不靠谱怎么判断",
+                 "上海注册公司没有地址怎么办？园区地址挂靠是什么、怎么判断靠不靠谱、哪几类行业不能用挂靠地址，一次说清判断方法，避免踩到不合规的地址。",
                  "没有注册地址怎么办：园区挂靠", "这是大多数初创公司的实际选择"),
-    "shijian/": ("办理时间", "上海注册公司要多久_各环节耗时明细",
-                 "上海注册公司要多久？核名、审核、领照、开户各环节分别耗时多久，哪些环节容易拖慢进度，以及怎么合理预期。",
+    "shijian/": ("办理时间", "上海注册公司要多久｜各环节耗时明细",
+                 "上海注册公司要多久？核名、材料审核、领取执照、银行开户各环节分别耗时多久，哪些环节最容易拖慢整体进度，以及怎么合理安排时间预期。",
                  "上海注册公司要多久", "各环节分别要等多久，心里先有个数"),
-    "gezhong/": ("个体户/公司", "上海个体户和有限公司怎么选_区别对比",
-                 "上海注册个体户还是有限公司？责任承担、税负、开票、融资、经营规模五个维度对比，帮你按自己的业务情况做判断。",
+    "gezhong/": ("个体户/公司", "上海个体户和有限公司怎么选｜区别对比",
+                 "上海注册个体户还是有限公司？从责任承担、税负高低、能否开票、融资难度、经营规模五个维度做对比，帮你按自己的实际业务情况做判断。",
                  "个体户还是有限公司，怎么选", "选错了改起来很麻烦，先想清楚再动手"),
-    "yinhang/": ("银行开户", "上海公司银行开户流程_为什么难办",
-                 "上海公司银行开户怎么办理？为什么现在开户变难了、各家银行要求差异、法人是否要到场、需要哪些材料，一次讲清。",
+    "yinhang/": ("银行开户", "上海公司银行开户流程｜为什么难办",
+                 "上海公司银行开户怎么办理？为什么现在开户比以前难、各家银行要求差异有多大、法人是否必须到场、需要带哪些材料，一次讲清避免白跑。",
                  "公司银行开户怎么办", "这一步现在比注册本身还容易卡住"),
-    "dailijizhang/": ("代理记账", "上海代理记账多少钱_怎么选服务",
-                 "上海公司代理记账多少钱？费用受什么影响、小规模和一般纳税人有何区别、怎么判断代账机构是否靠谱，附选择要点。",
+    "dailijizhang/": ("代理记账", "上海代理记账多少钱｜怎么选服务",
+                 "上海公司代理记账多少钱？费用受哪些因素影响、小规模和一般纳税人有何区别、怎么判断一家代账机构靠不靠谱，附上挑选服务时的几个要点。",
                  "代理记账多少钱，怎么选", "公司成立后的固定支出，办之前先算清楚"),
-    "wangshang/": ("网上办理", "上海一网通办注册公司怎么操作_步骤教程",
-                 "上海一网通办怎么注册公司？平台入口、实名认证、电子签名、材料上传的完整操作思路，以及常见提交失败原因。",
+    "wangshang/": ("网上办理", "上海一网通办注册公司怎么操作｜步骤教程",
+                 "上海一网通办怎么注册公司？从平台入口、实名认证、电子签名到材料上传的完整操作思路，以及最常见的几种提交失败原因和对应处理办法。",
                  "上海一网通办怎么操作", "自己办的完整思路，不找人也能走通"),
-    "faq/": ("常见问题", "上海注册公司常见问题30问_答疑汇总",
-             "上海注册公司常见问题汇总：法人是否到场、住宅能否注册、注册资本写多少、每年要花什么钱、代办和自己办的区别等。",
+    "faq/": ("常见问题", "上海注册公司常见问题30问｜答疑汇总",
+             "上海注册公司常见问题汇总：法人是否必须到场、住宅能不能注册、注册资本写多少合适、每年要固定花哪些钱、代办和自己办的区别，逐条作答。",
              "常见问题解答", "办之前最容易困惑的问题都在这里"),
-    "women/": ("关于我们", "关于我们_上海注册公司.com",
-               "上海注册公司.com 由上海宝山本地团队运营，专注公司注册咨询与园区资源对接，地址：上海市宝山区萧云路501号，电话17652523536。",
+    "women/": ("关于我们", "关于我们｜上海注册公司.com",
+               "上海注册公司.com 由上海宝山本地团队运营，专注公司注册咨询与园区资源对接，地址：上海市宝山区萧云路501号，电话17652523536，欢迎来电咨询。",
                "关于我们", "先帮你把情况理清楚，再谈办不办"),
 }
 
 DISC_HTML = """    <div class="disc">
       本站内容为一般性信息整理，仅供决策参考，不构成法律、财税或投资建议。公司注册的具体要求、费用与政策，以市场监督管理部门、税务机关及所在园区的最新规定为准。我们不承诺任何办理结果，请根据自身情况独立判断。
     </div>"""
+
+# build_faq_block() 每次调用会把该页 FAQ 登记在这里；compose() 读取生成 JSON-LD
+_FAQ_REGISTRY = {}
 
 
 def rel(path_from, target):
@@ -100,8 +135,26 @@ def rel(path_from, target):
     return "../" + target
 
 
-def build_head(page_path, title, desc):
+def build_head(page_path, title, desc, extra_jsonld=""):
     canonical = SITE_URL + "/" + page_path
+    # 全站统一的组织信息结构化数据（本地商家，匹配宝山实体地址）
+    org_jsonld = json.dumps({
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        "name": "上海注册公司.com",
+        "url": SITE_URL + "/",
+        "telephone": PHONE,
+        "description": "上海公司注册咨询与园区资源对接，提供营业执照办理、地址挂靠、代理记账等服务的规则解读。",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "萧云路501号",
+            "addressLocality": "上海市",
+            "addressRegion": "宝山区",
+            "addressCountry": "CN",
+        },
+        "areaServed": {"@type": "City", "name": "上海市"},
+        "priceRange": "咨询免费",
+    }, ensure_ascii=False, separators=(",", ":"))
     return f"""<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -115,8 +168,9 @@ def build_head(page_path, title, desc):
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{desc}">
 <meta property="og:url" content="{canonical}">
-<link rel="stylesheet" href="{rel(page_path, 'css/style.css')}">
-</head>
+<link rel="stylesheet" href="{asset_url(page_path, 'css/style.css')}">
+<script type="application/ld+json">{org_jsonld}</script>
+{extra_jsonld}</head>
 <body>
 """
 
@@ -144,6 +198,46 @@ def build_header(page_path):
 """
 
 
+def build_faq_jsonld(faqs):
+    """把 FAQ 列表转成 FAQPage 结构化数据（拿富摘要展示位）
+    faqs = [(问题, 答案HTML), ...]；答案里的标签会被剥掉只留纯文本"""
+    if not faqs:
+        return ""
+    import re as _re
+    items = []
+    for q, a in faqs:
+        plain = _re.sub(r"<[^>]+>", "", a)
+        plain = _re.sub(r"\s+", " ", plain).strip()
+        if not q or not plain:
+            continue
+        items.append({
+            "@type": "Question",
+            "name": q,
+            "acceptedAnswer": {"@type": "Answer", "text": plain},
+        })
+    if not items:
+        return ""
+    data = json.dumps({"@context": "https://schema.org", "@type": "FAQPage",
+                       "mainEntity": items}, ensure_ascii=False, separators=(",", ":"))
+    return ('<script type="application/ld+json">' + data + "</script>\n")
+
+
+def build_breadcrumb_jsonld(page_path, page_name):
+    """面包屑结构化数据：首页 > 当前页"""
+    if page_path == "":
+        return ""
+    data = json.dumps({
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "首页", "item": SITE_URL + "/"},
+            {"@type": "ListItem", "position": 2, "name": page_name,
+             "item": SITE_URL + "/" + page_path},
+        ],
+    }, ensure_ascii=False, separators=(",", ":"))
+    return '<script type="application/ld+json">' + data + "</script>\n"
+
+
 def build_footer(page_path):
     p = lambda s: rel(page_path, s)
     return f"""
@@ -163,7 +257,7 @@ def build_footer(page_path):
 {DISC_HTML}
 </footer>
 
-<script src="{p('js/main.js')}"></script>
+<script src="{asset_url(page_path, 'js/main.js')}"></script>
 </body>
 </html>
 """
@@ -219,6 +313,9 @@ def build_faq_block(page_path, faqs, heading="常见问题", sub="点开看答�
     """faqs = [(问题, 答案), ...]"""
     if not faqs:
         return ""
+    # 登记到收集器：compose() 会用同一份数据生成 FAQPage 结构化数据，
+    # 保证「页面可见问答」和「结构化数据」永远一致（不会一个改了另一个忘改）
+    _FAQ_REGISTRY[page_path] = faqs
     items = "\n".join(
         f'    <div class="faq-item"><div class="faq-q">{html_mod.escape(q)}</div>'
         f'<div class="faq-a">{a}</div></div>'

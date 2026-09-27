@@ -12,7 +12,9 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from build import (BASE_DIR, PAGES, build_head, build_header, build_footer,
                    build_pagehead, build_cta, build_linklist, build_faq_block,
-                   build_form, build_contact_band, PHONE, PHONE_TEL, SITE_URL)
+                   build_faq_jsonld, build_breadcrumb_jsonld,
+                   build_form, build_contact_band, PHONE, PHONE_TEL, SITE_URL,
+                   _FAQ_REGISTRY)
 
 
 def write(rel_path, content):
@@ -24,11 +26,22 @@ def write(rel_path, content):
 
 
 def compose(page_path, body):
-    """把 head/header + body + 通用尾部 拼成完整页面"""
+    """把 head/header + body + 通用尾部 拼成完整页面
+
+    结构化数据在这里统一注入：
+      · 组织信息（LocalBusiness）由 build_head 全站统一输出
+      · 面包屑（BreadcrumbList）每页一条
+      · 问答（FAQPage）自动取本页 build_faq_block 登记过的数据
+    """
     title = PAGES[page_path][1]
     desc = PAGES[page_path][2]
+    page_name = PAGES[page_path][0]
+
+    jsonld = build_faq_jsonld(_FAQ_REGISTRY.get(page_path)) \
+        + build_breadcrumb_jsonld(page_path, page_name)
+
     parts = [
-        build_head(page_path, title, desc),
+        build_head(page_path, title, desc, extra_jsonld=jsonld),
         build_header(page_path),
         body,
         build_form(),
@@ -1219,14 +1232,17 @@ def page_women():
 # sitemap / robots
 # ===============================================================
 def gen_sitemap():
-    today = "2026-09-27"
+    from datetime import date as _date
+    today = _date.today().isoformat()
     urls = []
     for path in PAGES:
         loc = SITE_URL + "/" + path
         pri = "1.0" if path == "" else ("0.8" if path in ("feiyong/", "liucheng/") else "0.7")
+        # 首页更新最频繁；内容页实际修订频率低，写 monthly 更诚实
+        freq = "weekly" if path == "" else "monthly"
         urls.append(
             f"  <url>\n    <loc>{loc}</loc>\n    <lastmod>{today}</lastmod>\n"
-            f"    <changefreq>monthly</changefreq>\n    <priority>{pri}</priority>\n  </url>"
+            f"    <changefreq>{freq}</changefreq>\n    <priority>{pri}</priority>\n  </url>"
         )
     xml = ('<?xml version="1.0" encoding="UTF-8"?>\n'
            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
@@ -1235,6 +1251,10 @@ def gen_sitemap():
 
     robots = f"""User-agent: *
 Allow: /
+
+# 站长平台验证文件对搜索无价值，不必抓取
+Disallow: /verify-baidu.txt
+Disallow: /baidu_verify_
 
 Sitemap: {SITE_URL}/sitemap.xml
 """

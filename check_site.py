@@ -34,6 +34,8 @@ def check_links(pages):
             if href.startswith(("http", "tel:", "mailto:", "#")):
                 continue
             target_path, _, anchor = href.partition("#")
+            # 剥掉查询串（资源指纹 ?v=xxxx 不是文件路径的一部分）
+            target_path = target_path.partition("?")[0]
             if not target_path:
                 continue
             if target_path == "./":
@@ -45,11 +47,12 @@ def check_links(pages):
             if not os.path.exists(target):
                 ERRORS.append(f"[死链] {rel} → {href}")
         # 检查资源链接
-        for m in re.finditer(r'(?:src|href)="([^"]*\.(?:css|js))"', html):
+        for m in re.finditer(r'(?:src|href)="([^"]*\.(?:css|js)(?:\?[^"]*)?)"', html):
             r = m.group(1)
             if r.startswith(("http", "//")):
                 continue
-            t = os.path.normpath(os.path.join(os.path.dirname(page), r))
+            r_clean = r.partition("?")[0]
+            t = os.path.normpath(os.path.join(os.path.dirname(page), r_clean))
             if not os.path.exists(t):
                 ERRORS.append(f"[资源缺失] {rel} → {r}")
 
