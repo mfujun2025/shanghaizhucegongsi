@@ -12,6 +12,7 @@
 输出：直接写入本目录（各子目录的 index.html）
 """
 import os
+import json
 import html as html_mod
 from datetime import date
 
@@ -20,6 +21,30 @@ SITE_URL = "https://xn--fhq55fzcr6i6s1crya.com"
 PHONE = "17652523536"
 PHONE_TEL = "17652523536"
 BUILD_DATE = date.today().isoformat()
+
+# ---------------------------------------------------------------
+# 询单接收端配置（优先级：config.local.json > 环境变量 > 空=演示模式）
+# ---------------------------------------------------------------
+CONFIG_LOCAL = os.path.join(BASE_DIR, "config.local.json")
+LOCAL_CFG = {}
+if os.path.isfile(CONFIG_LOCAL):
+    try:
+        with open(CONFIG_LOCAL, "r", encoding="utf-8") as _f:
+            LOCAL_CFG = json.load(_f) or {}
+    except Exception as _e:
+        print("  [警告] config.local.json 读取失败，已忽略：%s" % _e)
+
+
+def cfg(key, env_name, default=""):
+    v = LOCAL_CFG.get(key)
+    if v is None or (isinstance(v, str) and not v.strip()):
+        v = os.environ.get(env_name) or default
+    return str(v or "").strip()
+
+
+FEISHU_WEBHOOK = cfg("feishu_webhook", "SHZCGS_FEISHU_WEBHOOK")
+FEISHU_KEYWORD = cfg("feishu_keyword", "SHZCGS_FEISHU_KEYWORD", "咨询") or "咨询"
+SITE_NAME = "上海注册公司.com"
 
 # ---------------------------------------------------------------
 # 站点地图：路径 → (导航标题, 页面标题, meta description, 页面 h1, 副标题)
@@ -224,9 +249,12 @@ def build_form():
         <input type="tel" id="f-phone" name="phone" placeholder="11 位手机号" pattern="1[3-9]\\d{{9}}" autocomplete="tel" required>
         <label for="f-note">想咨询什么（选填）</label>
         <textarea id="f-note" name="note" rows="3" placeholder="例如：想注册一个贸易公司，没有地址"></textarea>
-        <button type="submit">让顾问联系我</button>
+        <!-- 蜜罐字段：正常用户看不见、不会填；被脚本自动填充即判定为垃圾 -->
+        <input id="c9" name="company_url" tabindex="-1" autocomplete="off"
+               style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" aria-hidden="true">
+        <button type="submit" id="f-submit">让顾问联系我</button>
       </form>
-      <p id="formmsg" style="text-align:center;margin-top:14px;font-size:14px;color:var(--brand);display:none"></p>
+      <p id="formmsg" role="status" aria-live="polite" style="text-align:center;margin-top:14px;font-size:14px;color:var(--brand);display:none"></p>
     </div>
   </div>
 </section>
@@ -244,7 +272,7 @@ def build_contact_band():
 """
 
 
-JS_MAIN = """/* 上海注册公司.com 全站脚本 */
+JS_MAIN_TMPL = """/* 上海注册公司.com 全站脚本 */
 (function () {
   'use strict';
 
@@ -263,34 +291,144 @@ JS_MAIN = """/* 上海注册公司.com 全站脚本 */
     w.className = 'table-wrap';
     w.style.overflowX = 'auto';
     t.parentNode.insertBefore(w, t);
-    w.appendChild(t);
   });
 })();
 
-/* 线索表单提交（前端占位，后续可接飞书 Webhook） */
-function submitLead(e) {
-  e.preventDefault();
-  var name = (document.getElementById('f-name') || {}).value || '';
-  var phone = (document.getElementById('f-phone') || {}).value || '';
-  var note = (document.getElementById('f-note') || {}).value || '';
-  name = name.trim();
-  phone = phone.trim();
+/* ============================================================
+   线索表单：提交到飞书群机器人（自定义机器人 Webhook）
+   接收端地址由构建时注入；未配置则进入演示模式（不发送任何数据）
+   ============================================================ */
+var SHZCGS_CFG = {
+  webhook: "__FEISHU_WEBHOOK__",
+  keyword: "__FEISHU_KEYWORD__",
+  site: "__SITE_NAME__",
+  phone: "__PHONE__"
+};
 
-  if (!/^1[3-9]\\d{9}$/.test(phone)) {
-    alert('请填写正确的 11 位手机号');
+var LEAD_FIELDS = [
+  ["称呼", "name"],
+  ["手机号", "phone"],
+  ["咨询内容", "note"]
+];
+
+function leadEsc(s) {
+  return String(s || "").replace(/[&<>]/g, function (c) {
+    return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c];
+  });
+}
+
+function leadNow() {
+  var d = new Date();
+  function p(n) { return (n < 10 ? "0" : "") + n; }
+  return d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate())
+       + " " + p(d.getHours()) + ":" + p(d.getMinutes());
+}
+
+function leadCard(d) {
+  var lines = LEAD_FIELDS.filter(function (f) { return d[f[1]]; })
+    .map(function (f) { return "**" + f[0] + "**：" + leadEsc(d[f[1]]); });
+  return {
+    msg_type: "interactive",
+    card: {
+      config: { wide_screen_mode: true },
+      header: {
+        template: "blue",
+        title: { tag: "plain_text", content: "🔔 新" + SHZCGS_CFG.keyword + " · " + SHZCGS_CFG.site }
+      },
+      elements: [
+        { tag: "div", text: { tag: "lark_md", content: lines.join("\\n") || "（未填写）" } },
+        { tag: "hr" },
+        { tag: "note", elements: [{ tag: "plain_text",
+            content: "来源：表单页 · " + leadNow() + " · 类型：" + SHZCGS_CFG.keyword }] }
+      ]
+    }
+  };
+}
+
+function leadShow(text, ok) {
+  var msg = document.getElementById("formmsg");
+  if (!msg) return;
+  msg.textContent = text;
+  msg.style.color = ok === false ? "#c0392b" : "var(--brand)";
+  msg.style.display = "block";
+  msg.scrollIntoView({ block: "center", behavior: "smooth" });
+}
+
+function leadBtnLock(lock, text) {
+  var b = document.getElementById("f-submit");
+  if (!b) return;
+  if (lock) {
+    b.dataset.old = b.textContent;
+    b.textContent = text || "提交中…";
+    b.disabled = true;
+  } else {
+    b.textContent = b.dataset.old || "让顾问联系我";
+    b.disabled = false;
+  }
+}
+
+function submitLead(e) {
+  if (e && e.preventDefault) e.preventDefault();
+
+  var el = function (id) { var n = document.getElementById(id); return n ? n.value : ""; };
+  var name = el("f-name").trim();
+  var phone = el("f-phone").trim();
+  var note = el("f-note").trim();
+
+  /* 蜜罐：命中即假成功，不发送（避免被脚本探测出拦截规则） */
+  if (el("c9")) {
+    leadShow("收到，" + (name || "你") + "。我们会尽快联系你，急的话直接打 " + SHZCGS_CFG.phone, true);
+    var f0 = document.getElementById("leadForm");
+    if (f0) f0.reset();
     return false;
   }
 
-  var msg = document.getElementById('formmsg');
-  if (msg) {
-    msg.textContent = '收到，' + (name || '你') + '。我们会尽快联系你，急的话直接打 17652523536';
-    msg.style.display = 'block';
-    msg.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  if (!/^1[3-9]\\d{9}$/.test(phone)) {
+    leadShow("手机号好像不对，请检查一下（11 位，1 开头）", false);
+    return false;
   }
-  document.getElementById('leadForm').reset();
+
+  /* 降级：未配置接收端 → 演示模式，不把数据发给任何第三方 */
+  if (!SHZCGS_CFG.webhook) {
+    leadShow("收到，" + (name || "你") + "。我们会尽快联系你，急的话直接打 " + SHZCGS_CFG.phone, true);
+    var f1 = document.getElementById("leadForm");
+    if (f1) f1.reset();
+    return false;
+  }
+
+  leadBtnLock(true);
+
+  fetch(SHZCGS_CFG.webhook, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(leadCard({ name: name, phone: phone, note: note }))
+  })
+    .then(function (r) { return r.json(); })
+    .then(function (j) {
+      leadBtnLock(false);
+      if (j && (j.code === 0 || j.StatusCode === 0)) {
+        leadShow("收到，" + (name || "你") + "。我们会尽快联系你，急的话直接打 " + SHZCGS_CFG.phone, true);
+        var f2 = document.getElementById("leadForm");
+        if (f2) f2.reset();
+      } else {
+        var m = (j && (j.msg || j.StatusMessage)) || "未知错误";
+        leadShow("提交没成功（" + m + "）。可以直接打电话 " + SHZCGS_CFG.phone + "，更快。", false);
+      }
+    })
+    .catch(function () {
+      leadBtnLock(false);
+      leadShow("网络好像不太顺，提交没发出去。可以直接打电话 " + SHZCGS_CFG.phone + "，更快。", false);
+    });
+
   return false;
 }
 """
+
+JS_MAIN = (JS_MAIN_TMPL
+           .replace("__FEISHU_WEBHOOK__", FEISHU_WEBHOOK)
+           .replace("__FEISHU_KEYWORD__", FEISHU_KEYWORD)
+           .replace("__SITE_NAME__", SITE_NAME)
+           .replace("__PHONE__", PHONE))
 
 
 def write_file(rel_path, content):
@@ -308,6 +446,14 @@ def build_all():
     css_path = os.path.join(BASE_DIR, "css", "style.css")
     if os.path.exists(css_path):
         written.append(("css/style.css", os.path.getsize(css_path)))
+
+    # 构建时明确打印接收端，避免「配了没生效」还查半天
+    if FEISHU_WEBHOOK:
+        masked = FEISHU_WEBHOOK[-8:] if len(FEISHU_WEBHOOK) > 8 else "***"
+        print("询单接收端：已启用（飞书 webhook ...%s，关键词「%s」）" % (masked, FEISHU_KEYWORD))
+    else:
+        print("询单接收端：未配置 → 演示模式（前端校验照跑，不发送任何数据）")
+        print("           配置方式：python setup_form.py  或  设 SHZCGS_FEISHU_WEBHOOK 环境变量")
 
     print("静态资源已就绪，页面由 gen_pages.py 生成。")
     return written
