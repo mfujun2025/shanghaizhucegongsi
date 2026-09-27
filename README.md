@@ -2,7 +2,7 @@
 
 上海地区公司注册信息与咨询服务站点，由上海宝山本地团队运营。
 
-- 主站：上海注册公司.com（`xn--5nqv0mk2lgd.com`）
+- 主站：上海注册公司.com（`xn--fhq55fzcr6i6s1crya.com`）
 - 咨询电话：17652523536（微信同号）
 - 地址：上海市宝山区萧云路501号
 
@@ -51,15 +51,15 @@ python -m http.server 8080
 
 托管在 **Cloudflare Pages**，域名 DNS 也在 Cloudflare。
 
-- 主站：`xn--5nqv0mk2lgd.com` → 本项目根目录
-- 从站：`xn--5nqv0mk2lgd.cn` / `xn--5nqv0mk2lgd.xn--fiqs8s` → 用 `_redirects` 做 301 到主站
+- 主站：`xn--fhq55fzcr6i6s1crya.com` → 本项目根目录
+- 从站：`xn--fhq55fzcr6i6s1crya.cn` / `xn--fhq55fzcr6i6s1crya.xn--fiqs8s` → 用 `_redirects` 做 301 到主站
 
 ### 从域名 301 配置
 
 把 `_redirects.example` 复制为 `_redirects`，内容：
 
 ```
-/*  https://xn--5nqv0mk2lgd.com/:splat  301
+/*  https://xn--fhq55fzcr6i6s1crya.com/:splat  301
 ```
 
 > 301 是唯一能把从域名权重合并到主站的方式。不要用 JS 跳转或 meta refresh 替代。

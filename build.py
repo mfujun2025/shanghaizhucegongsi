@@ -16,7 +16,7 @@ import html as html_mod
 from datetime import date
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-SITE_URL = "https://xn--5nqv0mk2lgd.com"
+SITE_URL = "https://xn--fhq55fzcr6i6s1crya.com"
 PHONE = "17652523536"
 PHONE_TEL = "17652523536"
 BUILD_DATE = date.today().isoformat()
