@@ -1,0 +1,31 @@
+# Cloudflare Pages 重写/重定向规则（主站）
+# ============================================
+# ⚠️ 背景：Pages 对「存在的 {path}.html 文件」会做 **308 去后缀**
+#     /xxx.html  →  308  →  /xxx
+# 搜索引擎站长平台的「文件验证」要求原地址 **200 直出**，不跟随 308 → 验证会失败。
+#
+# ✅ 已实测有效的解法：用 200 proxying 把 .html 路径重写到另一个真实文件
+#     /baidu_verify_xxx.html  /verify-baidu.txt  200
+# ⚠️ 无效方案（别走弯路）：
+#     1) `/a.html  /a.html  200`   恒等重写 → Pages 直接忽略
+#     2) 把验证文件放成目录 baidu_xxx.html/index.html → 会 308 到 /baidu_xxx.html/
+# 注意：.xml / .txt 等扩展名本身不触发去后缀，无需处理。
+
+# —— 站长平台验证文件（核心，改动前务必读上面的背景）——
+/baidu_verify_codeva-h3hbSMCZXE.html  /verify-baidu.txt  200
+
+# —— 兜底：任意 baidu_verify_codeva-*.html 都不去后缀 ——
+/baidu_verify_codeva-:token.html  /verify-baidu.txt  200
+
+# —— 站内 .html 直接访问 → 301 到目录形式（保持唯一 URL，避免重复内容）——
+/feiyong.html          /feiyong/          301
+/liucheng.html         /liucheng/         301
+/cailiao.html          /cailiao/          301
+/dizhi-guakao.html     /dizhi-guakao/     301
+/shijian.html          /shijian/          301
+/gezhong.html          /gezhong/          301
+/yinhang.html          /yinhang/          301
+/dailijizhang.html     /dailijizhang/     301
+/wangshang.html        /wangshang/        301
+/faq.html              /faq/              301
+/women.html            /women/            301
