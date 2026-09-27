@@ -200,3 +200,9 @@ footer .nav-f a{font-size:13px}
 .art-hub .art-group:first-child{margin-top:0}
 .art-hub .sec-title{text-align:left}
 .art-hub .sec-sub{text-align:left;margin-bottom:18px}
+
+/* 文章正文尾部锚文本内链（SEO：用主词形态做锚文本） */
+.art-tail-links{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:8px}
+.art-tail-links li{padding:0}
+.art-tail-links a{display:block;padding:10px 16px;background:#fafafa;border:1px solid var(--line);border-radius:8px;text-decoration:none;color:var(--brand);font-size:14.5px;transition:.15s}
+.art-tail-links a:hover{background:#fff;border-color:var(--brand)}

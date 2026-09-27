@@ -77,6 +77,9 @@ def cfg(key, env_name, default=""):
 FEISHU_WEBHOOK = cfg("feishu_webhook", "SHZCGS_FEISHU_WEBHOOK")
 FEISHU_KEYWORD = cfg("feishu_keyword", "SHZCGS_FEISHU_KEYWORD", "咨询") or "咨询"
 SITE_NAME = "上海注册公司.com"
+# 标题后缀：站点域名后缀本身含主词「上海注册公司」，
+# 若再拼成 " - 上海注册公司.com" 会让标题里主词出现两次，挤占长尾词配额。统一用短后缀。
+TITLE_SUFFIX = "｜上海注册公司.com"
 
 # ---------------------------------------------------------------
 # 站点地图：路径 → (导航标题, 页面标题, meta description, 页面 h1, 副标题)
@@ -118,10 +121,9 @@ PAGES = {
     "articles/": ("注册公司攻略", "上海注册公司办理攻略｜实务长文合集",
                   "上海注册公司办理攻略合集：费用构成、办理流程、材料清单、地址挂靠、行业资质、形态对比、注册后事务，按主题分组，每篇讲清一个具体问题。",
                   "上海注册公司办理攻略", "按主题分组，每篇只讲清一个具体问题"),
-    "women/": ("关于我们", "关于我们｜上海注册公司.com",
+    "women/": ("关于我们", "关于我们｜宝山实体办公",
                "上海注册公司.com 由上海宝山本地团队运营，专注公司注册咨询与园区资源对接，地址：上海市宝山区萧云路501号，电话17652523536，欢迎来电咨询。",
-               "关于我们", "先帮你把情况理清楚，再谈办不办"),
-}
+               "关于我们", "先帮你把情况理清楚，再谈办不办"),}
 
 DISC_HTML = """    <div class="disc">
       本站内容为一般性信息整理，仅供决策参考，不构成法律、财税或投资建议。公司注册的具体要求、费用与政策，以市场监督管理部门、税务机关及所在园区的最新规定为准。我们不承诺任何办理结果，请根据自身情况独立判断。
@@ -171,7 +173,7 @@ def build_head(page_path, title, desc, extra_jsonld=""):
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{title} - 上海注册公司.com</title>
+<title>{title}{TITLE_SUFFIX}</title>
 <meta name="description" content="{desc}">
 <meta name="keywords" content="上海注册公司,上海公司注册,上海注册公司流程,上海注册公司费用,园区地址挂靠,代理记账">
 <link rel="canonical" href="{canonical}">

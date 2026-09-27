@@ -250,6 +250,7 @@ def build_article_page(meta, body_html, faqs, toc_html):
     <div class="article-meta">更新日期 {esc(meta['date'])}　|　核心词：{esc(meta['core'])}</div>
     {toc_html}
     {body_html}
+    {build_article_tail(page_path, meta)}
   </div>
 </div>
 """
@@ -266,6 +267,33 @@ def build_article_page(meta, body_html, faqs, toc_html):
         build_footer(page_path),
     ]
     return "".join(parts)
+
+
+def build_article_tail(page_path, meta):
+    """文章正文末尾的锚文本内链：回主站内容页 + 回攻略目录。
+
+    搜索引擎对正文内锚文本的权重高于导航/页脚链接，
+    所以这里用「上海注册公司流程」「注册公司费用」这类主词形态做锚文本，
+    而不是"点击这里"。
+    """
+    anchors = [
+        ("feiyong/", "注册公司费用构成"),
+        ("liucheng/", "营业执照办理流程"),
+        ("cailiao/", "办执照需要准备的材料"),
+        ("dizhi-guakao/", "没有地址怎么办：园区挂靠"),
+        ("articles/", "全部办理攻略"),
+    ]
+    items = "".join(
+        '<li><a href="%s">%s</a></li>' % (rel(page_path, p), name)
+        for p, name in anchors
+    )
+    return f"""
+    <h2>相关页面</h2>
+    <p>本文只讲了其中一个环节。如果你还想了解其他方面，可以看看：</p>
+    <ul class="art-tail-links">
+      {items}
+    </ul>
+"""
 
 
 def build_article_jsonld(meta):
@@ -473,6 +501,9 @@ def main():
     # 目录页
     write("articles/index.html", build_hub(arts))
 
+    # 首页最新文章区块（回填占位符）
+    inject_home_articles(arts)
+
     # sitemap
     rebuild_sitemap(arts)
 
@@ -483,23 +514,41 @@ def main():
     print("✅ 完成")
 
 
+def sitemap_priority(path):
+    """统一的 priority 口径：首页最高，交易型页次之，攻略枢纽再次，普通内页最后"""
+    if path == "":
+        return "1.0"
+    if path in ("feiyong/", "liucheng/"):
+        return "0.8"
+    if path == "articles/":
+        return "0.8"
+    return "0.7"
+
+
 def rebuild_sitemap(arts):
     """重建 sitemap：主站页面 + 全部文章"""
     from build import PAGES
     from datetime import date
     today = date.today().isoformat()
     urls = []
+    seen = set()
     for path in PAGES:
         loc = SITE_URL + "/" + path
-        pri = "1.0" if path == "" else ("0.8" if path in ("feiyong/", "liucheng/") else "0.7")
-        freq = "weekly" if path == "" else "monthly"
+        if loc in seen:
+            continue
+        seen.add(loc)
+        pri = sitemap_priority(path)
+        freq = "weekly" if path == "" else ("daily" if path == "articles/" else "monthly")
         urls.append(f"  <url>\n    <loc>{loc}</loc>\n    <lastmod>{today}</lastmod>\n"
                     f"    <changefreq>{freq}</changefreq>\n    <priority>{pri}</priority>\n  </url>")
-    # 文章目录页
-    urls.append(f"  <url>\n    <loc>{SITE_URL}/articles/</loc>\n    <lastmod>{today}</lastmod>\n"
-                f"    <changefreq>daily</changefreq>\n    <priority>0.8</priority>\n  </url>")
+    # 目录页 /articles/ 已由主站 PAGES 收录，这里**不再追加**，
+    # 否则 sitemap 会出现两条同 URL（且 priority 不一致），属重复内容信号。
     for m in arts:
-        urls.append(f"  <url>\n    <loc>{SITE_URL}/articles/{m['slug']}/</loc>\n"
+        loc = f"{SITE_URL}/articles/{m['slug']}/"
+        if loc in seen:
+            continue
+        seen.add(loc)
+        urls.append(f"  <url>\n    <loc>{loc}</loc>\n"
                     f"    <lastmod>{m['date']}</lastmod>\n"
                     f"    <changefreq>monthly</changefreq>\n    <priority>0.6</priority>\n  </url>")
     xml = ('<?xml version="1.0" encoding="UTF-8"?>\n'
@@ -519,6 +568,45 @@ Disallow: /_topics/
 Sitemap: {SITE_URL}/sitemap.xml
 """
     write("robots.txt", robots)
+
+
+def inject_home_articles(arts, limit=6):
+    """把最新文章回填到首页的 <!-- HOME_ARTICLES --> 占位符。
+
+    为什么不在 gen_pages.py 里直接生成：
+      首页与文章由两个脚本分别生成，文章清单只有 build_articles.py 知道。
+      用占位符 + 回填，保证「先跑 gen_pages 再跑 build_articles」的既有顺序即可，
+      不需要改动日更脚本的调用次序。
+    """
+    home = os.path.join(BASE, "index.html")
+    if not os.path.isfile(home):
+        return
+    html = open(home, encoding="utf-8").read()
+    if "<!-- HOME_ARTICLES -->" not in html:
+        return
+    latest = sorted(arts, key=lambda m: (m.get("date") or "", m["slug"]), reverse=True)[:limit]
+    if not latest:
+        html = html.replace("<!-- HOME_ARTICLES -->", "")
+    else:
+        cards = "".join(
+            '<a class="art-card" href="articles/%s/"><div class="art-t">%s</div>'
+            '<div class="art-b">%s</div></a>'
+            % (m["slug"], esc(m.get("title") or m["slug"]),
+               esc(m.get("brief") or m.get("desc") or ""))
+            for m in latest
+        )
+        block = (
+            '<section>\n  <div class="wrap">\n'
+            '    <h2 class="sec-title">办理攻略：每篇讲清一个具体问题</h2>\n'
+            '    <p class="sec-sub">费用、流程、材料、地址、行业，按主题拆开讲</p>\n'
+            '    <div class="art-grid">%s</div>\n'
+            '    <div style="text-align:center;margin-top:28px">'
+            '<a class="btn btn-ghost" href="articles/">查看全部攻略 →</a></div>\n'
+            '  </div>\n</section>\n' % cards
+        )
+        html = html.replace("<!-- HOME_ARTICLES -->", block)
+    write("index.html", html)
+    print("   ↳ 首页已回填最新 %d 篇文章入口" % len(latest))
 
 
 def sync_topics(arts):
