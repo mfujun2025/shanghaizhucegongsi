@@ -13,7 +13,8 @@
 设计说明：
   · 文章由 AI 现场撰写，写入 _content/<slug>.md 后再跑 publish
   · publish 会：校验 → 构建 → 自检 → 打包 → 部署 → 打印结果
-  · 部署需要 CLOUDFLARE_API_TOKEN 环境变量；没有则只构建不部署（打印提示）
+  · 部署 token 优先读环境变量 CLOUDFLARE_API_TOKEN，其次读 config.local.json
+    的 cloudflare_api_token（定时任务在全新会话跑，环境变量带不过去，所以必须有后者）
   · 全程幂等：失败重跑不会产生重复内容
 """
 import os
@@ -29,11 +30,37 @@ TOPICS = os.path.join(HERE, "_topics", "topics.json")
 CONTENT = os.path.join(HERE, "_content")
 PROJECT = "shanghaizhucegongsi"
 DEPLOY_DIR = os.path.normpath(os.path.join(HERE, "..", "deploy"))
+CONFIG_LOCAL = os.path.join(HERE, "config.local.json")
+
+
+def get_token():
+    """取 Cloudflare API Token。
+
+    优先级：环境变量 > config.local.json。
+    加 config 这条是因为**定时任务在全新会话里跑，环境变量不会带过去**，
+    只靠 env 会导致日更永远停在"跳过部署"。
+    config.local.json 已在 .gitignore 里，token 不会进公开仓库。
+    """
+    t = os.environ.get("CLOUDFLARE_API_TOKEN", "").strip()
+    if t:
+        return t
+    try:
+        with open(CONFIG_LOCAL, encoding="utf-8") as f:
+            return (json.load(f).get("cloudflare_api_token") or "").strip()
+    except (OSError, ValueError):
+        return ""
 
 
 def run(cmd, **kw):
-    """执行命令，返回 (returncode, output)"""
-    p = subprocess.run(cmd, shell=isinstance(cmd, str), cwd=BASE,
+    """执行命令，返回 (returncode, output)
+
+    ⚠️ Windows 下 npx / npm 是 .cmd 批处理，subprocess 不传 shell 会
+       报 WinError 2（找不到文件）。这里统一用 shell=True 走系统解析。
+       命令列表里都是我们自己拼的固定字符串，不涉及外部输入，无注入风险。
+    """
+    if isinstance(cmd, (list, tuple)):
+        cmd = subprocess.list2cmdline(cmd)
+    p = subprocess.run(cmd, shell=True, cwd=BASE,
                        capture_output=True, text=True, encoding="utf-8",
                        errors="ignore", **kw)
     return p.returncode, (p.stdout or "") + (p.stderr or "")
@@ -147,9 +174,9 @@ def cmd_publish():
     print("\n" + "=" * 56)
     print("5/5  部署到 Cloudflare Pages")
     print("=" * 56)
-    token = os.environ.get("CLOUDFLARE_API_TOKEN", "").strip()
+    token = get_token()
     if not token:
-        print("⚠️  未设置 CLOUDFLARE_API_TOKEN → 跳过部署")
+        print("⚠️  未找到 CLOUDFLARE_API_TOKEN（环境变量与 config.local.json 都没有）→ 跳过部署")
         print("    产物已就绪：%s" % DEPLOY_DIR)
         print("    手动部署：npx wrangler pages deploy ../deploy --project-name=%s" % PROJECT)
         return 0

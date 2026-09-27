@@ -51,8 +51,22 @@ EXCLUDE_NAMES = {
 
 
 def ensure_clean(path):
+    """删除指定路径（文件或目录）。
+
+    ⚠️ 不用 shutil.rmtree：在 WorkBuddy 沙箱里它被 sitecustomize 钩子改写成
+       「移入回收站」，而回收站在某些路径上会因 SHFileOperationW 0x2 失败，
+       导致 pack_deploy 直接崩。这里自己递归删，语义明确、不依赖回收站。
+
+    注意：只删 DEST（deploy 产物目录）下的内容，那是本脚本自己生成的，
+          不是用户数据，所以可以真删。
+    """
+    if os.path.islink(path):
+        os.unlink(path)
+        return
     if os.path.isdir(path):
-        shutil.rmtree(path)
+        for name in os.listdir(path):
+            ensure_clean(os.path.join(path, name))
+        os.rmdir(path)
     elif os.path.isfile(path):
         os.remove(path)
 
