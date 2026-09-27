@@ -78,17 +78,33 @@ def main():
     env["NO_PROXY"] = "127.0.0.1,localhost"
     env["no_proxy"] = "127.0.0.1,localhost"
 
-    for script in ("build.py", "gen_pages.py"):
-        r = subprocess.run([sys.executable, script], cwd=BASE, env=env,
-                           capture_output=True, text=True, timeout=180)
-        if r.returncode != 0:
-            print("构建失败 %s：\n%s%s" % (script, r.stdout, r.stderr))
-            return 1
-    print("✓ 已按 mock webhook 构建")
+    # ⚠️ config.local.json 优先级高于环境变量，测试期间必须临时挪走，
+    #    否则真实 webhook 会覆盖 mock 地址，导致测出的是真发（还可能污染真群）
+    cfg_local = os.path.join(BASE, "config.local.json")
+    cfg_backup = os.path.join(BASE, "_config.local.json.bak")
+    moved = False
+    if os.path.isfile(cfg_local):
+        os.replace(cfg_local, cfg_backup)
+        moved = True
+        print("· 已临时移开 config.local.json（避免真实 webhook 污染测试）")
 
-    js = open(os.path.join(BASE, "js", "main.js"), encoding="utf-8").read()
-    assert "127.0.0.1:%d" % MOCK_PORT in js, "webhook 未注入！"
-    print("✓ webhook 已注入前端 js")
+    try:
+        for script in ("build.py", "gen_pages.py"):
+            r = subprocess.run([sys.executable, script], cwd=BASE, env=env,
+                               capture_output=True, text=True, timeout=180)
+            if r.returncode != 0:
+                print("构建失败 %s：\n%s%s" % (script, r.stdout, r.stderr))
+                return 1
+        print("✓ 已按 mock webhook 构建")
+
+        js = open(os.path.join(BASE, "js", "main.js"), encoding="utf-8").read()
+        assert "127.0.0.1:%d" % MOCK_PORT in js, "webhook 未注入！"
+        assert "open.feishu.cn" not in js, "真实 webhook 泄漏进测试构建！"
+        print("✓ webhook 已注入前端 js（确认为 mock 地址）")
+    finally:
+        if moved:
+            os.replace(cfg_backup, cfg_local)
+            print("· 已恢复 config.local.json")
 
     # ---------- 2. 生成测试页 ----------
     html = open(os.path.join(BASE, "index.html"), encoding="utf-8").read()
@@ -254,6 +270,19 @@ def main():
         print("已删除测试页 _t_form.html")
     except Exception:
         pass
+
+    # ⚠️ 测试用的是 mock 配置，产物里的 webhook 也是 mock 地址。
+    #    必须按真实配置重新构建，否则会把 mock 地址部署上线。
+    print("· 按真实配置重新构建…")
+    r = subprocess.run([sys.executable, "build.py"], cwd=BASE,
+                       capture_output=True, text=True, timeout=180)
+    r2 = subprocess.run([sys.executable, "gen_pages.py"], cwd=BASE,
+                        capture_output=True, text=True, timeout=180)
+    js2 = open(os.path.join(BASE, "js", "main.js"), encoding="utf-8").read()
+    if "127.0.0.1:%d" % MOCK_PORT in js2:
+        print("  ⚠️ 警告：产物里仍是 mock 地址，请手动跑 build.py + gen_pages.py")
+    else:
+        print("  ✓ 已恢复真实配置（产物中无 mock 地址）")
 
     if fails:
         print("❌ 失败 %d 项：%s" % (len(fails), "、".join(fails)))

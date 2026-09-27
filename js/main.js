@@ -25,8 +25,8 @@
    接收端地址由构建时注入；未配置则进入演示模式（不发送任何数据）
    ============================================================ */
 var SHZCGS_CFG = {
-  webhook: "",
-  keyword: "咨询",
+  webhook: "https://open.feishu.cn/open-apis/bot/v2/hook/efab23c8-23da-40fa-8cf6-ba42da4495a9",
+  keyword: "上海注册公司",
   site: "上海注册公司.com",
   phone: "17652523536"
 };
