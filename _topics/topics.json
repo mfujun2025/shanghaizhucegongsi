@@ -58,7 +58,8 @@
       "core": "上海注册公司刻章要收费吗",
       "slug": "seal-fee",
       "angle": "刻章环节的费用构成与常见附加项",
-      "status": "未用"
+      "status": "已用",
+      "used_date": "2026-10-01"
     },
     {
       "id": 6,
@@ -66,7 +67,8 @@
       "core": "上海注册公司注册资本要实缴吗",
       "slug": "capital-paid-in",
       "angle": "认缴制怎么理解+认缴额的责任含义",
-      "status": "未用"
+      "status": "已用",
+      "used_date": "2026-10-02"
     },
     {
       "id": 7,
