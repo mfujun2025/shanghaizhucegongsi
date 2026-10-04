@@ -59,3 +59,13 @@
 - 站点产物本身无问题：全站 126 处都是正确 punycode，错的只是记忆笔记
 - 铁律（已入 MEMORY.md）：punycode 一律当场用代码算，绝不凭记忆手写
 - 排查套路：本机 DNS 解析不了这类中文域名，用 **DoH 取 IP → `curl --resolve 域名:443:IP`** 验证
+
+## 2026-10-04（第 7 次执行；同日 site 目录内已另有一篇手工稿 bookkeeping-yearly-fee）
+- 状态：✅ 发布链路全流程成功（校验/构建/自检/打包/部署/提交推送 一次通过，零 error 零 warning）
+- 选题：`fee-negotiation`，core「上海注册公司费用可以砍价吗」，簇 fee，角度「哪些费用有弹性、哪些没有」
+- 产出：`_content/fee-negotiation.md`，实际中文 ≈2232 字，8 个 H2，3 张对照表，2 个引用块，6 条 FAQ
+- 主词「上海注册公司」正文仅数次（含 frontmatter/正文开头），构建校验与自检均无告警通过
+- 部署：Cloudflare Pages ✅ https://14525a6b.shanghaizhucegongsi.pages.dev ；文章页 HTTP 200（24095B）
+- 提交：`4841234` 已推送 main（15 files changed）；`git ls-remote origin main` 比对一致
+- 选题池：已用 9 / 共 70，待用 61；下一篇（status 提示）`annual-cost`
+- 备注：config.local.json 未进入 git 暂存区（gitignore 正常）；无失败步骤、无异常
