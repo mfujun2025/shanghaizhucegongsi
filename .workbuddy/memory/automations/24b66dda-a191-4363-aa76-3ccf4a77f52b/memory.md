@@ -69,3 +69,15 @@
 - 提交：`4841234` 已推送 main（15 files changed）；`git ls-remote origin main` 比对一致
 - 选题池：已用 9 / 共 70，待用 61；下一篇（status 提示）`annual-cost`
 - 备注：config.local.json 未进入 git 暂存区（gitignore 正常）；无失败步骤、无异常
+
+## 2026-10-05（第 8 次执行）
+- 状态：✅ 发布链路全流程成功（校验/构建/自检/打包/部署/提交推送 一次通过，零 error 零 warning）
+- 选题：`free-agency-trap`，core「上海注册公司免费代办靠谱吗」，簇 fee，角度「免费模式背后的商业逻辑与判断方法」
+- 产出：`_content/free-agency-trap.md`，正文 2536 中文字（含表格/FAQ），7 个 H2，2 张对照表，4 个引用块，6 条 FAQ
+- 主词「上海注册公司」出现 4 次，密度 0.844%（_len=2843；阈值 0.3–0.9，零告警，但贴近上限）
+- 部署：Cloudflare Pages ✅ https://3dfa9294.shanghaizhucegongsi.pages.dev ；文章页 HTTP 200（23500B），主域 .com 同路径也 200
+- 提交：`e02da14` 已推送 main（26 files changed）；`git ls-remote origin main` 比对一致
+- 选题池：已用 10 / 共 70，待用 60；下一篇 `process-duration`「上海注册公司流程需要几天」（簇 process）
+- 新发现（已补进 MEMORY.md）：**H2 里写核心词会被计两次**——锚点 id 由 slugify_anchor 生成，也含核心词，
+  而密度是按 `_body` HTML 原文 count 的。4 次里就有 2 次来自那个 H2（id + 文本）
+- 备注：config.local.json 未进入 git 暂存区（gitignore 正常）；无失败步骤、无异常
