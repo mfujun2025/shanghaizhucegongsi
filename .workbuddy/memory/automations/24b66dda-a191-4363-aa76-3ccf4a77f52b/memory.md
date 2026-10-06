@@ -81,3 +81,15 @@
 - 新发现（已补进 MEMORY.md）：**H2 里写核心词会被计两次**——锚点 id 由 slugify_anchor 生成，也含核心词，
   而密度是按 `_body` HTML 原文 count 的。4 次里就有 2 次来自那个 H2（id + 文本）
 - 备注：config.local.json 未进入 git 暂存区（gitignore 正常）；无失败步骤、无异常
+
+## 2026-10-06（第 9 次执行）
+- 状态：✅ 发布链路全流程成功（校验/构建/自检/打包/部署/提交推送 一次通过，零 error 零 warning）
+- 选题：`process-duration`，core「上海注册公司流程需要几天」，簇 process（**该簇首篇**），角度「各环节耗时明细与卡点」
+- 产出：`_content/process-duration.md`，`_len`=2892（≈2110 实际中文字，落在 1800–2500 目标带），9 个 H2，3 张对照表，4 个引用块，6 条 FAQ
+- 主词「上海注册公司」出现 3 次（首段 1 + 一个 H2 双计 2），密度 **0.622%**（阈值 0.3–0.9，零告警）
+- 定稿过程：初稿 `_len`=2274 / 密度 0.792%（偏高）→ 补两段正文与一个新 H2 抬到 `_len`=2692（0.669%）→ 再补「整体节奏怎么估」段到 2892（0.622%）。印证：**加正文可同时拉字数、降密度，是修"密度偏高"的正解**
+- 本次系数核对：`_len`/实际中文 = 2892/2110 ≈ 1.37，与此前校准一致，无需修正
+- 部署：Cloudflare Pages ✅ https://e07cb776.shanghaizhucegongsi.pages.dev ；文章页 HTTP 200（22823B），标题/H2/6 条 FAQ/电话均已线上核到
+- 提交：`5ff66ea` 已推送 main（30 files changed）；`git ls-remote origin main` 比对一致
+- 选题池：已用 11 / 共 70，待用 59；下一篇 `name-check-apply`「上海注册公司核名怎么操作」（簇 process）
+- 备注：config.local.json 未进入 git 暂存区（gitignore 正常）；无失败步骤、无异常
