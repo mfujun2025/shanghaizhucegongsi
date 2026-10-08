@@ -93,3 +93,13 @@
 - 提交：`5ff66ea` 已推送 main（30 files changed）；`git ls-remote origin main` 比对一致
 - 选题池：已用 11 / 共 70，待用 59；下一篇 `name-check-apply`「上海注册公司核名怎么操作」（簇 process）
 - 备注：config.local.json 未进入 git 暂存区（gitignore 正常）；无失败步骤、无异常
+
+## 2026-10-07（第 10 次执行）
+- 状态：✅ 发布链路全流程成功（校验/构建/自检/打包/部署/提交推送 一次通过，零 error 零 warning）
+- 选题：`business-scope-write`，core「上海注册公司经营范围怎么写」，簇 process，角度「一般项目/许可项目的区别与写法」
+- 产出：`_content/business-scope-write.md`，实际中文 ≈2300 字，8 个 H2，3 张对照表，4 个引用块，6 条 FAQ
+- 主词「上海注册公司」3 次（首段 1 + H2 双计 2），零告警（阈值口径 0.3–1.2%）
+- 部署：Cloudflare Pages ✅ https://407f8bd8.shanghaizhucegongsi.pages.dev ；文章页 HTTP 200
+- 提交：`0543a70` 已推送 main（8 files changed）；远端 HEAD 比对一致
+- 选题池：已用 13 / 共 70，待用 57；下一篇 `online-apply`「上海注册公司网上怎么办理」（簇 process）
+- 备注：config.local.json 未进入 git 暂存区（gitignore 正常）；无失败步骤、无异常
