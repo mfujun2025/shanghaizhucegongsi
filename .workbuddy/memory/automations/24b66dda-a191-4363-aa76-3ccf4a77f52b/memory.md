@@ -106,6 +106,19 @@
   绝对路径必报死链中止。要写相对路径如 `../capital-paid-in/`（详见 .workbuddy/memory/2026-10-08.md）
 - 备注：config.local.json 未进入 git 暂存区（gitignore 正常）
 
+## 2026-10-09（第 12 次执行）
+- 状态：✅ 发布链路全流程成功（校验/构建/自检/打包/部署/提交推送 一次通过，零 error 零 warning）
+- 选题：`e-signature`，core「上海注册公司电子签名怎么弄」，簇 process，角度「电子签名的操作步骤与失败排查」
+- 产出：`_content/e-signature.md`，`_len`=3229（≈2357 实际中文字），8 个 H2，2 张对照表，4 个引用块，7 条 FAQ
+- 主词「上海注册公司」3 次（首段 1 + 第四节引导 1 + FAQ 1），密度 **0.557%**；**刻意不在 H2 里写核心词**以避开锚点 id 双计
+- 部署：Cloudflare Pages ✅ https://ec0082ee.shanghaizhucegongsi.pages.dev ；主域文章页 200
+- 提交：`20afd47` 已推送 main（31 files changed）；`git ls-remote origin main` 比对一致
+- 选题池：已用 15 / 共 70，待用 55；下一篇 `rejected-fix`「上海注册公司提交后被驳回怎么办」
+- ⚠️ **新确认（已入 .workbuddy/memory/2026-10-09.md + MEMORY.md）**：
+  ① 文章线上路径是 **`/articles/<slug>/`**，`/<slug>/` 会落到首页；
+  ② 该站对不存在路径 **catch-all 回落首页且返回 200** → 核上线必须比对 `<title>`/canonical，不能只看状态码
+- 备注：config.local.json 未进入 git 暂存区（gitignore 正常）；无失败步骤、无异常
+
 ## 2026-10-07（第 10 次执行）
 - 状态：✅ 发布链路全流程成功（校验/构建/自检/打包/部署/提交推送 一次通过，零 error 零 warning）
 - 选题：`business-scope-write`，core「上海注册公司经营范围怎么写」，簇 process，角度「一般项目/许可项目的区别与写法」
