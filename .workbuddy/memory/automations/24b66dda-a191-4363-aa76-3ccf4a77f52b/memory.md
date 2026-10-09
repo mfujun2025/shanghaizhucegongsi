@@ -94,6 +94,18 @@
 - 选题池：已用 11 / 共 70，待用 59；下一篇 `name-check-apply`「上海注册公司核名怎么操作」（簇 process）
 - 备注：config.local.json 未进入 git 暂存区（gitignore 正常）；无失败步骤、无异常
 
+## 2026-10-08（第 11 次执行）
+- 状态：✅ 发布链路全流程成功（校验/构建/自检/打包/部署/提交推送 一次通过，零 error 零 warning）
+- 选题：`online-apply`，core「上海注册公司网上怎么办理」，簇 process，角度「一网通办操作路径与常见失败原因」
+- 产出：`_content/online-apply.md`，`_len`=3234，8 个 H2，2 张对照表，4 个引用块，6 条 FAQ
+- 主词「上海注册公司」4 次（首段 1 + H2 双计 2 + FAQ 1），密度 **0.742%**（阈值 0.3–1.2，零告警）
+- 部署：Cloudflare Pages ✅ https://630b6ea0.shanghaizhucegongsi.pages.dev ；文章页 HTTP 200（24356B）
+- 提交：`53c8cd3` 已推送 main（32 files changed）；远端 HEAD 比对一致
+- 选题池：已用 14 / 共 70，待用 56
+- ⚠️ 新坑：正文 markdown 内链不能写 `/articles/...` 绝对路径——check_site.py 把 href 相对拼到当前页目录，
+  绝对路径必报死链中止。要写相对路径如 `../capital-paid-in/`（详见 .workbuddy/memory/2026-10-08.md）
+- 备注：config.local.json 未进入 git 暂存区（gitignore 正常）
+
 ## 2026-10-07（第 10 次执行）
 - 状态：✅ 发布链路全流程成功（校验/构建/自检/打包/部署/提交推送 一次通过，零 error 零 warning）
 - 选题：`business-scope-write`，core「上海注册公司经营范围怎么写」，簇 process，角度「一般项目/许可项目的区别与写法」
