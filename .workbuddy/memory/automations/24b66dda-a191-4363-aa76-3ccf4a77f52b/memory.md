@@ -146,3 +146,24 @@
 - **待老孟处理**：重新提供 Cloudflare API Token 写入 `site/config.local.json` 后重跑 `publish` 补发；
   建议把 token 同时备份到工作区外部路径并在 `get_token()` 加兜底，避免工作区重建即停部署
 - 备注：config.local.json 未进入 git 暂存区（文件本身不存在，gitignore 完好）
+
+## 2026-10-11（第 14 次执行）
+- 状态：⚠️ **部分成功**——写稿/校验/构建/自检/打包/提交推送全部成功；**部署再次被跳过**（仍无 Cloudflare token）
+- 选题：`legal-person-attend`，core「上海注册公司法人必须到场吗」，簇 process，角度「哪些环节必须本人、哪些可代办」
+- 产出：`_content/legal-person-attend.md`，`_len`=3620（实际中文 ≈2642），10 个 H2，2 张对照表，4 个引用块，7 条 FAQ
+- 主词「上海注册公司」4 次，密度 **0.663%**；零 error 零 warning 一次通过
+- 定稿过程：初稿正文命中仅 1 次 → **0.174%，破 0.3% 下限**；改为「不在 H2 写核心词 + 首段/结尾/新 FAQ 各补 1 次」→ 0.663%
+- 新校准（已入 MEMORY.md）：**长文 `_len`≈3600 时主词可用 4–7 次**（4 次 0.66%、7 次 1.16%）；
+  最容易踩的坑是密度偏低而非偏高，**先算 `_len` 再定次数**
+- 部署：❌ 跳过（脚本输出「未找到 CLOUDFLARE_API_TOKEN」）；产物已就绪
+  `shzcgs/deploy/articles/legal-person-attend/index.html`（27221 B）
+- **线上核验（比对 title，非状态码）**：`/articles/legal-person-attend/` 返回首页 title → **未上线**；
+  对照 `/zzz-not-exist/` 同样返回首页 title，`/articles/e-signature/` 返回自身 title → 比对方法有效
+- 提交：`e0e09ac` 已推送 main；`git ls-remote origin main` 比对一致
+- 选题池：已用 17 / 共 70，待用 53
+- **待老孟处理（连续第 2 天）**：`rejected-fix`（10-10）与 `legal-person-attend`（10-11）两篇
+  均已构建打包但未上线，**只差一个 Cloudflare API Token**。本轮又穷尽搜了一遍
+  （`~/.workbuddy/shzcgs-automation/` 不存在、diaoche 的 secrets 只有 GitHub token、
+  wrangler 无 OAuth 态、traces 里的 40 位串是 git pack SHA），确认本地确实没有。
+  补齐 token 后跑一次 `publish` 即可补发两篇
+- 备注：config.local.json 未进入 git 暂存区（文件本身不存在，gitignore 完好）

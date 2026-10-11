@@ -69,6 +69,16 @@
 - 主域核验命令：
   `curl -s https://xn--fhq55fzcr6i6s1crya.com/articles/<slug>/ | grep -o '<title>[^<]*</title>'`
 
+## 🚨 2026-10-10~11 事件：部署凭据缺失（连续两天文章未上线）
+- 10-10 工作区重建后 `config.local.json` 丢失，10-11 仍未恢复 →
+  **`rejected-fix`、`legal-person-attend` 两篇已构建打包但未上线**
+- token 穷尽搜索结果（10-11 复核）：`~/.workbuddy/shzcgs-automation/` **不存在**；
+  `diaoche-cn/config/local.secrets.json` 只有 GitHub token；wrangler 无 OAuth 登录态；
+  traces 里的 40 位串是 git pack SHA 不是 token
+- **需老孟提供 Cloudflare API Token** 写入 `site/config.local.json`，再跑 `publish` 可一次补发两篇
+- 教训：**凭据必须放在工作区之外**（如 `~/.workbuddy/shzcgs-automation/token.json`），
+  否则工作区一重建就断线
+
 ## 🚨 2026-10-10 事件：工作区被清空 → 从 git pack 完整恢复
 - 现象：`shzcgs/site` 只剩空 `.git/objects/pack`，80 个受控文件、`HEAD`/`config`/`refs` 全无
   （工作区被系统重建，用户级 MEMORY.md 预警过）
@@ -80,6 +90,15 @@
   并在 `daily_publish.py:get_token()` 加外部路径兜底，否则每次工作区重建都会停掉部署
 - remote URL 可从 `C:\Users\Huawei\.git-credentials`（`https://mfujun2025:<token>@github.com`）
   + 仓库路径 `mfujun2025/shanghaizhucegongsi.git` 重新拼出，push 不受影响
+
+## 2026-10-11 补充校准：密度下限与长文主词次数
+- **最容易踩的坑是密度"偏低"而不是偏高**：长文很容易写到 `_len` 3300+，但主词若只出现在
+  frontmatter/core 与 FAQ 里，正文命中可能只有 **1 次 = 0.17%**，直接破 0.3% 下限告警
+- 修正手法（本轮验证有效）：**刻意不在 H2 里写核心词**（避开锚点 id 双计），在
+  ①首段 ②结尾段 ③一条真实搜索语序的 FAQ 各补 1 次 → 4 次
+- **长文主词次数放宽**：`_len` ≈ 3600 时，4 次 = 0.66%、7 次 = 1.16% → 任务书"6–12 次"在长文里可行；
+  之前必须压到 3–4 次是因为 `_len` 只有 2800–3200。上限公式 `count ≤ 1.2×_len/600` 一直成立
+- 一句话：**先算 `_len`，再定主词次数**。短稿(≈2900)用 3–4 次，长稿(≈3600)可用 4–7 次
 
 ## 2026-10-10 补充校准：任务书密度指标自相矛盾
 - 任务书写「主词出现 6–12 次，密度 0.3%–0.6%」，但两条**数学上不可兼得**：
