@@ -190,3 +190,22 @@
   补齐 token 后跑一次 `publish` 即可补发三篇
 - 备注：config.local.json 未进入 git 暂存区（文件本身不存在，gitignore 完好）；无其他失败步骤
 
+## 2026-10-12 追加（同日第 15.5 次执行）：✅ **部署恢复，3 天中断结束**
+- 触发：用户「继续执行」，目标是补上被跳过的部署
+- **根因定位**：不是没有凭据，而是脚本只认 API Token、没认 **wrangler OAuth 登录态**。
+  `npx wrangler whoami` 显示**已登录**（账号 `548827878@qq.com`，Account ID
+  `e13919277deb71458fa1259e0774ef11`，含 `pages:write` scope），
+  登录态在 `%APPDATA%\xdg.config\.wrangler\config\default.toml`，wrangler 会自动续期
+- **代码修复**（`daily_publish.py`，提交 `34f4f9c`）：
+  · 新增 `has_oauth_login()` 探测 4 个常见位置的 `default.toml`
+  · 部署第 5 步改为三档回落：**API Token → OAuth 登录态 → 跳过**
+  · 关键：走 OAuth 分支时 `env.pop("CLOUDFLARE_API_TOKEN", None)`，避免空值覆盖登录态
+- **部署结果**：`✅ 发布完成` → `https://eca25fed.shanghaizhucegongsi.pages.dev`（37 files / 3.07s）
+- **一次补发 3 篇积压文章，线上比对 `<title>` 全部确认上线**：
+  `single-shareholder`(10-12)、`legal-person-attend`(10-11)、`rejected-fix`(10-10)
+- 提交：`34f4f9c` 已推送 main
+- 📌 **后续日更无需任何 secret 文件即可部署**（只要 wrangler 登录态在）。
+  排查捷径：先跑 `npx wrangler whoami`，别在 `config.local.json` 上耗时间
+- 选题池不变：已用 18 / 共 70，待用 52
+
+

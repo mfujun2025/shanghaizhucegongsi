@@ -69,8 +69,24 @@
 - 主域核验命令：
   `curl -s https://xn--fhq55fzcr6i6s1crya.com/articles/<slug>/ | grep -o '<title>[^<]*</title>'`
 
+## ✅ 2026-10-12 解决：部署改用 wrangler OAuth 登录态（凭据问题闭环）
+- **结论：不再需要 config.local.json 里的 API Token 也能部署**，本地已有可用的 wrangler OAuth 登录态
+- 登录态位置：`C:\Users\Huawei\AppData\Roaming\xdg.config\.wrangler\config\default.toml`
+  （含 `oauth_token` + `refresh_token`，scopes 含 `pages:write`；**wrangler 自动续期**，
+  即使 access token 标注过期，`npx wrangler whoami` 依然通）
+- 账号：`548827878@qq.com`，Account ID `e13919277deb71458fa1259e0774ef11`
+- 为什么可靠：**该文件在用户目录下，工作区重建不会丢** —— 比 .gitignore 里的 config.local.json 稳得多
+- 代码改动（`daily_publish.py`，已提交 `34f4f9c`）：
+  · 新增 `has_oauth_login()`，探测 `WRANGLER_CONFIG_DIR` / `%APPDATA%\xdg.config\.wrangler\config\default.toml`
+    / `~/.config/.wrangler/config/default.toml` / `~/.wrangler/config/default.toml`
+  · 第 5 步三档回落：**API Token → OAuth 登录态 → 跳过**
+  · ⚠️ 走 OAuth 分支必须 `env.pop("CLOUDFLARE_API_TOKEN", None)`，
+    否则空值会覆盖登录态导致 401
+- 一次性补发 3 篇积压文章并全部线上核实通过
+- **排查捷径（以后别在 config.local.json 上耗时间）**：先跑 `npx wrangler whoami` 看有没有登录态
+
 ## 🚨 2026-10-10~11 事件：部署凭据缺失（连续两天文章未上线）
-- 10-10 工作区重建后 `config.local.json` 丢失，10-11 仍未恢复 →
+〔2026-10-12 已闭环：改用 wrangler OAuth 登录态部署，不再依赖 config.local.json，详见上一条〕- 10-10 工作区重建后 `config.local.json` 丢失，10-11 仍未恢复 →
   **`rejected-fix`、`legal-person-attend` 两篇已构建打包但未上线**
 - token 穷尽搜索结果（10-11 复核）：`~/.workbuddy/shzcgs-automation/` **不存在**；
   `diaoche-cn/config/local.secrets.json` 只有 GitHub token；wrangler 无 OAuth 登录态；
