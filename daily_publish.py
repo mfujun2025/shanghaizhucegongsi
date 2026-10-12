@@ -33,6 +33,35 @@ DEPLOY_DIR = os.path.normpath(os.path.join(HERE, "..", "deploy"))
 CONFIG_LOCAL = os.path.join(HERE, "config.local.json")
 
 
+def has_oauth_login():
+    """探测本机是否存在有效的 wrangler OAuth 登录态。
+
+    2026-10-12 新增：工作区多次重建会丢掉 config.local.json（它不在版本控制里），
+    导致日更连续多天停在"跳过部署"。但 wrangler 的 OAuth 登录态存在用户目录下
+    （Windows: %APPDATA%\\xdg.config\\.wrangler\\config\\default.toml），
+    工作区重建不影响它，且 wrangler 会自动用 refresh_token 续期。
+    所以有登录态时，直接让 wrangler 用自己的凭据部署，无需任何 secret 文件。
+    """
+    p = os.environ.get("WRANGLER_CONFIG_DIR")
+    candidates = []
+    if p:
+        candidates.append(os.path.join(p, "config", "default.toml"))
+    appdata = os.environ.get("APPDATA")
+    if appdata:
+        candidates.append(os.path.join(appdata, "xdg.config", ".wrangler", "config", "default.toml"))
+    candidates.append(os.path.join(os.path.expanduser("~"), ".config", ".wrangler", "config", "default.toml"))
+    candidates.append(os.path.join(os.path.expanduser("~"), ".wrangler", "config", "default.toml"))
+    for c in candidates:
+        try:
+            with open(c, encoding="utf-8") as f:
+                txt = f.read()
+            if "refresh_token" in txt or "oauth_token" in txt:
+                return True
+        except OSError:
+            continue
+    return False
+
+
 def get_token():
     """取 Cloudflare API Token。
 
@@ -40,6 +69,10 @@ def get_token():
     加 config 这条是因为**定时任务在全新会话里跑，环境变量不会带过去**，
     只靠 env 会导致日更永远停在"跳过部署"。
     config.local.json 已在 .gitignore 里，token 不会进公开仓库。
+
+    两者都没有时返回 ""；调用方会再检查 has_oauth_login()，
+    有 wrangler 登录态就退回用 OAuth 凭据部署（不注入 CLOUDFLARE_API_TOKEN，
+    让 wrangler 自己读 default.toml，避免空值覆盖掉有效登录态）。
     """
     t = os.environ.get("CLOUDFLARE_API_TOKEN", "").strip()
     if t:
@@ -175,14 +208,22 @@ def cmd_publish():
     print("5/5  部署到 Cloudflare Pages")
     print("=" * 56)
     token = get_token()
-    if not token:
-        print("⚠️  未找到 CLOUDFLARE_API_TOKEN（环境变量与 config.local.json 都没有）→ 跳过部署")
+    env = dict(os.environ)
+    if token:
+        env["CLOUDFLARE_API_TOKEN"] = token
+        print("  使用 CLOUDFLARE_API_TOKEN 部署")
+    elif has_oauth_login():
+        # 没有 API Token，但本机有 wrangler 的 OAuth 登录态 —— 退回用它部署。
+        # 关键：不要往 env 里塞空的 CLOUDFLARE_API_TOKEN，否则会覆盖登录态导致 401。
+        env.pop("CLOUDFLARE_API_TOKEN", None)
+        print("  未配置 API Token，改用 wrangler OAuth 登录态部署")
+    else:
+        print("⚠️  未找到 CLOUDFLARE_API_TOKEN（环境变量与 config.local.json 都没有），"
+              "也没有 wrangler 登录态 → 跳过部署")
         print("    产物已就绪：%s" % DEPLOY_DIR)
         print("    手动部署：npx wrangler pages deploy ../deploy --project-name=%s" % PROJECT)
         return 0
 
-    env = dict(os.environ)
-    env["CLOUDFLARE_API_TOKEN"] = token
     rc, out = run(["npx", "--yes", "wrangler@4", "pages", "deploy", "../deploy",
                    "--project-name=%s" % PROJECT, "--commit-dirty=true"], env=env)
     lines = out.strip().split("\n")
