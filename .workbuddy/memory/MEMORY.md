@@ -100,6 +100,21 @@
   之前必须压到 3–4 次是因为 `_len` 只有 2800–3200。上限公式 `count ≤ 1.2×_len/600` 一直成立
 - 一句话：**先算 `_len`，再定主词次数**。短稿(≈2900)用 3–4 次，长稿(≈3600)可用 4–7 次
 
+## 🚨 2026-10-12 重大修正：主词落位「H1」根本不计数（推翻此前所有落位认知）
+- **`_body` = 渲染后的正文 HTML，frontmatter 的 title / seo_title / core 一律不计入密度**
+- 此前笔记反复写「主词必须落在 H1 + 首段 + H2 + FAQ」——**H1 那一条是错的**。
+  文章页 H1 由 `build_article_page` 用 frontmatter title 渲染，**不在 `_body` 内**，不计数
+- 逐篇复算验证（`_body` 命中 vs raw 命中，差值恒等于 frontmatter 命中）：
+  · legal-person-attend 7 → **4**（frontmatter 3）· online-apply 7 → **4**（3）
+  · e-signature 6 → **3**（3）· process-duration 4 → **3**（1）
+- **计数只发生在正文 markdown 里**：首段、小节正文、H2 文本、FAQ 问句
+- 复算命令（改路径即可）：
+  `python -c "import sys;sys.path.insert(0,'.');import build_articles as B; md=open('_content/X.md',encoding='utf-8').read(); meta,bm=B.parse_front_matter(md); body,_,_=B.render_markdown(bm); L=B.text_len(body); c=body.count('上海注册公司'); print(L,c,c*6/L*100)"`
+- 推荐落位组合（`_len` 3300–3700，目标 0.3–0.6%）：
+  ⓐ 首段 1 + H2 1（双计 2）+ FAQ 1 = **4 次**；ⓑ 全程避开 H2 = 首段 1 + 正文 1 + FAQ 1 = **3 次**
+- 上限公式不变：`count ≤ 1.2 × _len / 600`
+- 一句话：**先算 `_len`，再扣掉 frontmatter 的不计数部分，最后在正文里补足目标次数**
+
 ## 2026-10-10 补充校准：任务书密度指标自相矛盾
 - 任务书写「主词出现 6–12 次，密度 0.3%–0.6%」，但两条**数学上不可兼得**：
   密度 = `次数×6/_len`，`_len`≈3250 时 6 次 = 1.11%，远超 0.6%

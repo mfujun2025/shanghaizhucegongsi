@@ -167,3 +167,26 @@
   wrangler 无 OAuth 态、traces 里的 40 位串是 git pack SHA），确认本地确实没有。
   补齐 token 后跑一次 `publish` 即可补发两篇
 - 备注：config.local.json 未进入 git 暂存区（文件本身不存在，gitignore 完好）
+
+## 2026-10-12（第 15 次执行）
+- 状态：⚠️ **部分成功**——写稿/校验/构建/自检/打包/提交推送全部成功；**部署第 3 天仍被跳过**（无 Cloudflare token）
+- 选题：`single-shareholder`，core「上海注册公司股东可以一个人吗」，簇 process，角度「一人公司的规则与注意事项」
+- 产出：`_content/single-shareholder.md`，`_len`=3696（实际中文 ≈2700 字），8 个 H2，3 张对照表，5 个引用块，7 条 FAQ
+- 主词「上海注册公司」3 次，密度 **0.487%**（0.3–0.6 理想带正中）；零 error 零 warning 一次通过
+- 落位：首段 1 + 末节小结 1 + FAQ 首问 1 = 3（**刻意全程不在 H2 写核心词**，避开锚点 id 双计）
+- 部署：❌ 跳过（脚本输出「未找到 CLOUDFLARE_API_TOKEN」）；产物已就绪
+  `shzcgs/deploy/articles/single-shareholder/index.html`（26660 B，title 正确）
+- **线上核验（比对 title，非状态码）**：`/articles/single-shareholder/` 返回首页 title → **未上线**；
+  对照 `/articles/e-signature/` 返回自身 title → 比对方法有效
+- 提交：`806adc6` 已推送 main（31 files changed）；`git ls-remote origin main` 比对一致
+- 选题池：已用 18 / 共 70，待用 52
+- 📌 **本次重大发现（已入 MEMORY.md + 2026-10-12.md）**：**主词落位「H1」根本不计数**。
+  `_body` 是渲染后的正文 HTML，frontmatter 的 title/seo_title/core 一律不计入。
+  逐篇复算 4 篇历史稿证实：`_body` 命中 = raw 命中 − frontmatter 命中数（差值 1 或 3）。
+  计数只发生在正文 markdown 里（首段/小节正文/H2 文本/FAQ 问句）。此前笔记的「H1 必须落位」作废
+- **待老孟处理（连续第 3 天）**：`rejected-fix`(10-10)、`legal-person-attend`(10-11)、
+  `single-shareholder`(10-12) **三篇**均已构建打包但未上线，只差一个 Cloudflare API Token。
+  本轮再确认本地无 token（`~/.workbuddy/shzcgs-automation/` 不存在、无 wrangler OAuth 态）。
+  补齐 token 后跑一次 `publish` 即可补发三篇
+- 备注：config.local.json 未进入 git 暂存区（文件本身不存在，gitignore 完好）；无其他失败步骤
+
