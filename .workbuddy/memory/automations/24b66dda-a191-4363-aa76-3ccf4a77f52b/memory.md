@@ -222,4 +222,17 @@
   排查捷径：先跑 `npx wrangler whoami`，别在 `config.local.json` 上耗时间
 - 选题池不变：已用 18 / 共 70，待用 52
 
+## 2026-10-14（第 17 次执行）
+- 状态：✅ 全流程一次通过（校验/构建/自检/打包/部署/提交推送；零 error 零 warning）
+- 选题：`license-wait-time`，core「上海注册公司多久能拿到营业执照」，簇 process，角度「审核周期构成+如何合理预期」
+- 产出：`_content/license-wait-time.md`，`_len`=3187（实际中文字 ≈2837），10 个 H2，3 张对照表，3 个引用块，7 条 FAQ
+- 主词「上海注册公司」正文命中 **3 次**，密度 **0.565%**（0.3–0.6 理想带）
+- 落位策略（沿用并已验证）：首段 1 + 小结节 1 + FAQ 首问 1；**H2 全部避开核心词**，用「多久能拿到营业执照」等长尾变体 → 规避 anchor id 双计
+- 同簇防撞车：与 `process-duration`（流程需要几天）切分角度——本篇只讲「执照这一段」，开篇声明并内链过去
+- 部署：Cloudflare Pages ✅ `https://1b0ea363.shanghaizhucegongsi.pages.dev`（wrangler OAuth 登录态，API Token 仍未配置）
+- 线上核验（比对 title 而非状态码）：主域 `/articles/license-wait-time/` 返回自身 title → 确认上线
+- 提交：`ad77f48` 已推送 main；`git ls-remote origin main` 比对一致
+- 选题池：已用 20 / 共 70，待用 50；下一篇 `material-list`「上海注册公司需要什么材料」（簇 material，该簇首篇）
+- 备注：config.local.json 未进入 git 暂存区（gitignore 完好）；无失败步骤、无异常
+
 
