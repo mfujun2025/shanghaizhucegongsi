@@ -235,6 +235,20 @@
 - 选题池：已用 20 / 共 70，待用 50；下一篇 `material-list`「上海注册公司需要什么材料」（簇 material，该簇首篇）
 - 备注：config.local.json 未进入 git 暂存区（gitignore 完好）；无失败步骤、无异常
 
+## 2026-10-16（第 19 次执行）
+- 状态：✅ 全流程一次通过（校验/构建/自检/打包/部署/提交推送；零 error 零 warning）
+- 选题：`no-property-cert`，core「上海注册公司没有房产证能注册吗」，簇 material（该簇第 2 篇），角度「不同地址来源对应的材料要求」
+- 产出：`_content/no-property-cert.md`，`_len`=3370（实际中文字 ≈2460），7 个 H2，1 张六种地址来源对照表，5 个引用块，7 条 FAQ
+- 主词「上海注册公司」正文命中 **2 次**，密度 **0.356%**（0.3–0.6 理想带下沿）
+- 落位策略（沿用已验证组合）：首段 1 + FAQ 首问 1；**H2 全程避开核心词**，用「六种地址来源」「自有住宅」等长尾变体做标题 → 规避 anchor id 双计
+- 同簇防撞车：与 `material-list`（材料四分类总纲）切分——本篇只讲「地址这一类」在不同来源下的证明要求，开篇区分「合规性」与「证明力」两个维度，并内链过去
+- 部署：Cloudflare Pages ✅ `https://0528c024.shanghaizhucegongsi.pages.dev`（wrangler OAuth 登录态，API Token 仍未配置）
+- 线上核验（比对 title 而非状态码）：主域 `/articles/no-property-cert/` 返回自身 title → 确认上线；对照 `/zzz-not-exist/` 返回首页 title
+- 提交：`58452c7` 已推送 main（40 files changed）；`git ls-remote origin main` 比对一致
+- 选题池：已用 22 / 共 70，待用 48
+- 备注：config.local.json 未进入 git 暂存区（gitignore 完好）；无失败步骤、无异常
+- 经验：本次正文 2460 实际字，比 10-13 那篇（3438）更贴任务书 1800–2500 区间；写稿前先用 Python 预校验 `_len` 与密度，可避免构建后才发现告警
+
 ## 2026-10-15（第 18 次执行）
 - 状态：✅ 全流程一次通过（校验/构建/自检/打包/部署/提交推送；零 error 零 warning）
 - 选题：`material-list`，core「上海注册公司需要什么材料」，簇 material（**该簇首篇**），角度「材料清单逐项拆解+退回原因」
