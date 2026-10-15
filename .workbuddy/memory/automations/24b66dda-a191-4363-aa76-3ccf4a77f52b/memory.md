@@ -235,4 +235,14 @@
 - 选题池：已用 20 / 共 70，待用 50；下一篇 `material-list`「上海注册公司需要什么材料」（簇 material，该簇首篇）
 - 备注：config.local.json 未进入 git 暂存区（gitignore 完好）；无失败步骤、无异常
 
-
+## 2026-10-15（第 18 次执行）
+- 状态：✅ 全流程一次通过（校验/构建/自检/打包/部署/提交推送；零 error 零 warning）
+- 选题：`material-list`，core「上海注册公司需要什么材料」，簇 material（**该簇首篇**），角度「材料清单逐项拆解+退回原因」
+- 产出：`_content/material-list.md`，`_len`=3375，6 个 H2，1 张对照表（4 种地址来源×材料要求），4 个引用块，8 条 FAQ
+- 主词「上海注册公司」正文命中 **3 次**，密度 **0.533%**（0.3–0.6 理想带正中）
+- 落位策略（沿用已验证组合）：首段 1 + 结尾段 1 + FAQ 首问 1；**H2 全程避开核心词**，改用「注册公司需要什么材料」长尾变体做小节标题 → 规避 anchor id 双计
+- 部署：Cloudflare Pages ✅ `https://dfca4bae.shanghaizhucegongsi.pages.dev`（wrangler OAuth 登录态）
+- 线上核验（比对 title 而非状态码）：主域 `/articles/material-list/` 返回自身 title → 确认上线；对照 `/zzz-not-exist/` 返回首页 title
+- 提交：`1b5d5fc` 已推送 main；`git ls-remote origin main` 比对一致
+- 选题池：已用 21 / 共 70，待用 49；下一篇 `no-property-cert`「上海注册公司没有房产证能注册吗」（簇 material）
+- 备注：config.local.json 未进入 git 暂存区（gitignore 完好）；无失败步骤、无异常
