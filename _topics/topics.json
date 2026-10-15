@@ -202,7 +202,8 @@
       "core": "上海注册公司需要什么材料",
       "slug": "material-list",
       "angle": "材料清单逐项拆解+退回原因",
-      "status": "未用"
+      "status": "已用",
+      "used_date": "2026-10-15"
     },
     {
       "id": 22,
