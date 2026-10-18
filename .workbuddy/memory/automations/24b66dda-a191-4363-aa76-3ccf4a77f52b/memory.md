@@ -291,3 +291,19 @@
 - 选题池：已用 24 / 共 70，待用 46；下一篇 `residential-address`「上海注册公司住宅地址能用吗」
 - 备注：config.local.json 未进入 git 暂存区（gitignore 完好）；无失败步骤、无异常
 - 校准：`_len` 是全字符数（含标点/数字），本次 3755 ↔ 中文字 3412；任务书「1800–2500 字」按**正文（不含 FAQ）**口径理解，本篇 2568
+
+## 2026-10-19（第 22 次执行）
+- 状态：✅ 全流程一次通过（校验/构建/自检/打包/部署/提交推送；零 error 零 warning）
+- 选题：`residential-address`，core「上海注册公司住宅地址能用吗」，簇 material（该簇第 5 篇），角度「住改商的政策口径与判断方法」
+- 产出：`_content/residential-address.md`，8 个 H2，1 张三条件对照表，2 个引用块，7 条 FAQ
+- 字数：正文（不含 FAQ）2736 中文字，FAQ 约 780，合计 3517；`_len`=3949
+- 主词「上海注册公司」正文命中 **3 次**，密度 **0.456%**（0.3–0.6 理想带）
+- 落位策略（沿用已验证组合）：首段 1 + 第八节引导句 1 + FAQ 首问 1；**H2 全程避开核心词**，
+  用「住宅地址能注册公司吗」「一致同意怎么落地」等长尾变体做标题 → 规避 anchor id 双计
+- 同簇防撞车：与 `no-property-cert`（六种地址来源的材料链）切分——本篇只讲住宅这一类，
+  主线为《民法典》第 279 条三层含义 → 三条件 → 核实顺序 → 同意书写法 → 业态边界 → 后续成本 → 替代路径
+- 部署：Cloudflare Pages ✅ `https://afc10149.shanghaizhucegongsi.pages.dev`（wrangler OAuth 登录态）
+- 线上核验（比对 title 而非状态码）：主域 `/articles/residential-address/` 返回自身 title → 确认上线
+- 提交：`0c3d18f` 已推送 main；`git ls-remote origin main` 比对一致
+- 选题池：已用 25 / 共 70，待用 45；下一篇 `address-proof`「上海注册公司注册地址证明怎么准备」
+- 备注：config.local.json 未进入 git 暂存区（gitignore 完好）；无失败步骤、无异常
