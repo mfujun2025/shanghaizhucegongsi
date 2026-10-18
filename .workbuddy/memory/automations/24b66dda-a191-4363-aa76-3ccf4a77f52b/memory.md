@@ -275,3 +275,19 @@
 - 选题池：已用 23 / 共 70，待用 47；下一篇 `id-original-required`「上海注册公司股东身份证要原件吗」（簇 material）
 - 备注：config.local.json 未进入 git 暂存区（gitignore 完好）；push 时出现 git-credential-manager.exe 缺失告警，但凭据已在 `.git-credentials` 中，push 正常完成，属无害告警
 - 经验：写稿前用 Python 预校验（parse_front_matter → render_markdown → text_len + count）可在构建前定稿密度，本轮一次到位无需返工
+
+## 2026-10-18（第 21 次执行）
+- 状态：✅ 全流程一次通过（校验/构建/自检/打包/部署/提交推送；零 error 零 warning）
+- 选题：`id-original-required`，core「上海注册公司股东身份证要原件吗」，簇 material（该簇第 4 篇），角度「身份材料的提交形式与常见问题」
+- 产出：`_content/id-original-required.md`，8 个 H2，3 张对照表，1 个引用块，8 条 FAQ
+- 字数：正文（不含 FAQ）约 2568 中文字，FAQ 约 640，合计 3412；`_len`=3755
+- 主词「上海注册公司」正文命中 **3 次**，密度 **0.479%**（0.3–0.6 理想带）
+- 落位策略（沿用已验证组合）：首段 1 + 结尾节 1 + FAQ 首问 1；**H2 全程避开核心词**，改用「注册公司身份证复印件可以吗」等长尾变体 → 规避 anchor id 双计
+- 同簇防撞车：与 `material-list`（清单总纲）、`no-property-cert`（地址类材料）、`articles-of-association`（章程）切分——本篇只讲「身份这一类材料以什么形式提交」，开篇把「核验/留存/上交」三件事分开
+- 结构亮点：三条主线（三动作、线上实名认证+影像件、窗口三种核验情形）+ 证件状态四类问题 + 特殊身份对照表 + 退回原因对照表
+- 部署：Cloudflare Pages ✅ `https://ce9bc2bb.shanghaizhucegongsi.pages.dev`（wrangler OAuth 登录态，API Token 仍未配置）
+- 线上核验（比对 title 而非状态码）：pages.dev 与主域 `/articles/id-original-required/` 均返回自身 title → 确认上线；对照 `/zzz-not-exist/` 返回首页 title
+- 提交：`fe77eee` 已推送 main（41 files changed）；`git ls-remote origin main` 比对一致
+- 选题池：已用 24 / 共 70，待用 46；下一篇 `residential-address`「上海注册公司住宅地址能用吗」
+- 备注：config.local.json 未进入 git 暂存区（gitignore 完好）；无失败步骤、无异常
+- 校准：`_len` 是全字符数（含标点/数字），本次 3755 ↔ 中文字 3412；任务书「1800–2500 字」按**正文（不含 FAQ）**口径理解，本篇 2568
