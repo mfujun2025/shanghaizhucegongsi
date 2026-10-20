@@ -140,3 +140,15 @@
   与历史稿 `online-apply`(0.742%) / `e-signature`(0.557%) 一致，构建零 warning（阈值 1.2%）
 - 正文长度：本站既有长文实际中文 2580–2910 字（`_len` 2890–3250），
   任务书"1800–2500 字"偏保守，按既有基线写即可（`check_site.py` 只查 <1500）
+
+## 2026-10-21 校准：`_len` 系数不固定，别再手算
+- 本篇（legal-person-requirement）`_len`=4662，全文中文字 4225 → 比值仅 **1.10**；既往多篇是 1.37。
+  差异来自表格密度与句子长短（标点/数字占比不同）。**结论：一律跑 Python 预校验，不用系数估**
+- 预校验一行（构建前定稿用）：
+  `python -c "import sys;sys.path.insert(0,'.');import build_articles as B;md=open('_content/X.md',encoding='utf-8').read();m,b=B.parse_front_matter(md);body,f,t=B.render_markdown(b);L=B.text_len(body);c=body.count('上海注册公司');print(L,c,'%.3f%%'%(c*6/L*100))"`
+- **下限临界点：`_len` 4400 左右时，2 次 = 0.27% 会触发偏低告警；长文最少放 3 次**
+- 部署计数不代表结果：wrangler 可能报 `Uploaded 0 files (N already uploaded)`（内容哈希复用），
+  文章其实已上线。**是否上线只看线上 `<title>` / canonical**
+- 结构模板（本篇验证可用，10 H2 / 4 表 / 4 引用 / 8 FAQ，全篇零 error 零 warning）：
+  概念辨析 → 三道资格门（身份/能力/排除情形）→ 外部身份限制 → 特殊人群 → 任职责任 → 核查清单 → 误解纠正 → 收尾
+

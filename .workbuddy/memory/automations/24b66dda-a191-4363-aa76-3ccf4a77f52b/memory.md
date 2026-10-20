@@ -323,3 +323,24 @@
 - 备注：config.local.json 未进入 git 暂存区（gitignore 完好）；无失败步骤、无异常
 - 提示：本篇中文 3502 字，仍超出任务书 1800–2500 区间（与 10-19 那篇 3517 同档）。若要严格贴区间，
   下次写稿先按 2400 字规划小节，每 H2 控制在 250 字左右
+
+## 2026-10-21（第 24 次执行）
+- 状态：✅ 全流程一次通过（校验/构建/自检/打包/部署/提交推送；零 error 零 warning）
+- 选题：`legal-person-requirement`，core「上海注册公司法定代表人有什么要求」，簇 material（该簇第 7 篇），
+  角度「任职资格与限制情形」
+- 产出：`_content/legal-person-requirement.md`，10 个 H2，4 张对照表，4 个引用块，8 条 FAQ
+- 指标：`_len`=4662（正文中文 ≈3250 字，FAQ 987 字），主词正文命中 **3 次**，密度 **0.386%**（0.3–0.6 理想带）
+- 落位：首段 1 + 第十节 1 + FAQ 首问 1；H2 全程避开核心词
+- 同簇防撞车：与 `legal-person-attend`（法人必须到场吗，process 簇）切分——本篇只讲"谁能当、谁不能当"，
+  不涉及到场与签字环节
+- 事实核验：法条原文经联网比对（市场监管总局、全国人大网）——公司法 2023 修订第十条、第十一条、
+  第一百七十八条；民法典成年与民事行为能力规则。全文无具体金额、未点名任何机构
+- 部署：Cloudflare Pages ✅ `https://13bcc703.shanghaizhucegongsi.pages.dev`（wrangler OAuth 登录态）
+- 线上核验：主域与 pages.dev 的 `/articles/legal-person-requirement/` 均返回自身 title，canonical 正确
+- 提交：`2f99b67` 已推送 main（45 files changed）；`git ls-remote origin main` 比对一致
+- 选题池：27 / 70，待用 43；下一篇 `english-name`「上海注册公司名字可以用英文吗」
+- 备注：config.local.json 未进入 git 暂存区（gitignore 完好）；无失败步骤、无异常
+- 新校准（已入 MEMORY.md）：`_len`/中文字 比值并非固定 1.37（本篇仅 1.10）→ **一律用 Python 预校验**；
+  `_len`>4400 时主词 2 次会跌破 0.3% 下限，长文最少 3 次；wrangler 报 "Uploaded 0 files" 不代表未部署，
+  上线与否只看线上 `<title>`
+
