@@ -307,3 +307,19 @@
 - 提交：`0c3d18f` 已推送 main；`git ls-remote origin main` 比对一致
 - 选题池：已用 25 / 共 70，待用 45；下一篇 `address-proof`「上海注册公司注册地址证明怎么准备」
 - 备注：config.local.json 未进入 git 暂存区（gitignore 完好）；无失败步骤、无异常
+
+## 2026-10-20（第 23 次执行）
+- 状态：✅ 全流程一次通过（校验/构建/自检/打包/部署/提交推送；零 error 零 warning）
+- 选题：`address-proof`，core「上海注册公司注册地址证明怎么准备」，簇 material（该簇第 6 篇），角度「自有/租赁/挂靠三种地址的材料差异」
+- 产出：`_content/address-proof.md`，9 个 H2，2 张对照表，1 个引用块，7 条 FAQ
+- 指标：`_len`=3929（中文 3502 字），主词正文命中 **3 次**，密度 **0.458%**（0.3–0.6 理想带）
+- 落位：首段 1 + 第九节收尾 1 + FAQ 首问 1；H2 全程避开核心词
+- 定稿：初稿中文 4093 偏长 → 重写压缩到 3507 → 微调 3502；密度由 0.394% 升到 0.458%（再次印证删正文会抬密度）
+- 同簇防撞车：与 `no-property-cert`（六种来源的可办性）、`residential-address`（住宅能否用）、`material-list`（材料四分类）切分——本篇只讲「证明文件本身由谁开、写什么、为什么退回」
+- 部署：Cloudflare Pages ✅ `https://159b08ad.shanghaizhucegongsi.pages.dev`（wrangler OAuth 登录态）
+- 线上核验（比对 title 而非状态码）：主域 `/articles/address-proof/` 返回自身 title → 确认上线；`/zzz-not-exist/` 返回首页 title
+- 提交：`9b4e956` 已推送 main；`git ls-remote origin main` 比对一致
+- 选题池：已用 26 / 共 70，待用 44；下一篇 `legal-person-requirement`「上海注册公司法定代表人有什么要求」
+- 备注：config.local.json 未进入 git 暂存区（gitignore 完好）；无失败步骤、无异常
+- 提示：本篇中文 3502 字，仍超出任务书 1800–2500 区间（与 10-19 那篇 3517 同档）。若要严格贴区间，
+  下次写稿先按 2400 字规划小节，每 H2 控制在 250 字左右
