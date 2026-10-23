@@ -362,3 +362,19 @@
   `_len`>4400 时主词 2 次会跌破 0.3% 下限，长文最少 3 次；wrangler 报 "Uploaded 0 files" 不代表未部署，
   上线与否只看线上 `<title>`
 
+## 2026-10-23（第 26 次执行）
+- 状态：✅ 全流程一次通过（校验/构建/自检/打包/部署/提交推送；零 error 零 warning）
+- 选题：`shareholder-count`，core「上海注册公司需要几个股东」，簇 material（该簇第 9 篇），角度「股东人数选择对经营的影响」
+- 产出：`_content/shareholder-count.md`，10 个 H2，4 张对照表，2 个引用块，7 条 FAQ，文末附 MLA 式「本文依据的公开资料」
+- 指标：`_len`=4435，中文 3884 字，主词正文命中 **3 次**，密度 **0.406%**（0.3–0.6 理想带）
+- 落位：首段 1 + 第十节收尾 1 + FAQ 首问 1；H2 全程避开核心词，内链锚文本用长尾变体（规避 anchor id 双计与锚文本计数）
+- 同簇防撞车：与 `single-shareholder`（一人公司的规则与注意事项，process 簇）切分——本篇只讲「人数怎么选及其经营影响」
+- 事实核验：公司法 2023 修订第 23(3)/34/42/47/50/60/64/65/66/83/84/88/92 条，逐条比对全国人大网与市场监管总局原文
+- 部署：Cloudflare Pages ✅ `https://547964bb.shanghaizhucegongsi.pages.dev`（wrangler OAuth 登录态）
+- 线上核验（比对 title 而非状态码）：主域 `/articles/shareholder-count/` 返回自身 title，canonical 正确；`/zzz-not-exist/` 返回首页 title
+- 提交：`bbfe058` 已推送 main（45 files changed）；`git ls-remote origin main` 比对一致
+- 选题池：29 / 70，待用 41；下一篇 `supervisor-role`「上海注册公司监事需要几个人」
+- 校准：压字数会**反向抬高密度**（4446→3884 字使密度 0.357%→0.406%）；4 张表格约占 400 中文字，估字数别只算段落
+- 备注：config.local.json 未进入 git 暂存区（gitignore 完好）；无失败步骤、无异常
+
+
