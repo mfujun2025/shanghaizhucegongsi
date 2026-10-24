@@ -362,6 +362,21 @@
   `_len`>4400 时主词 2 次会跌破 0.3% 下限，长文最少 3 次；wrangler 报 "Uploaded 0 files" 不代表未部署，
   上线与否只看线上 `<title>`
 
+## 2026-10-24（第 27 次执行）
+- 状态：✅ 全流程一次通过（校验/构建/自检/打包/部署/提交推送；零 error 零 warning）
+- 选题：`supervisor-role`，core「上海注册公司监事需要几个人」，簇 material（该簇第 10 篇），角度「监事制度的作用与设置方式」
+- 产出：`_content/supervisor-role.md`，10 个 H2，4 张对照表，3 个引用块，7 条 FAQ，文末附 MLA 式公开资料
+- 指标：`_len`=4539，正文中文 3940 字，主词正文命中 **3 次**，密度 **0.397%**（0.3–0.6 理想带）
+- 落位：首段 1 + 第十节收尾 1 + FAQ 首问 1；H2 全程避开核心词，内链锚文本用长尾变体
+- 定稿：初稿 4382 字/0.359%（贴下限）→ 精简至 3940 字，密度回升到 0.397%（再次印证删正文会抬密度）
+- 部署：Cloudflare Pages ✅ `https://d7009ca2.shanghaizhucegongsi.pages.dev`（wrangler OAuth 登录态）
+- 线上核验（比对 title 而非状态码）：主域 `/articles/supervisor-role/` 返回自身 title 与正确 canonical；对照 `/articles/zzz-not-exist/` 返回首页 title
+- 提交：`1ed30c6` 已推送 main（48 files changed）；`git ls-remote origin main` 比对一致
+- 选题池：30 / 70，待用 40；下一篇 `no-address-solution`「上海注册公司没有地址怎么办」（簇 address）
+- 📌 事实校正（已入当日日志）：监事属**备案**事项，依据《市场主体登记管理条例》**第九条第(四)项**；
+  第八条是登记事项，勿混。条文另核第七十六/七十七/七十八/七十九/八十/八十一/八十二/八十三/六十九/一百七十八/五十三/一百八十条
+- 备注：config.local.json 未进入 git 暂存区（gitignore 完好）；无失败步骤、无异常
+
 ## 2026-10-23（第 26 次执行）
 - 状态：✅ 全流程一次通过（校验/构建/自检/打包/部署/提交推送；零 error 零 warning）
 - 选题：`shareholder-count`，core「上海注册公司需要几个股东」，簇 material（该簇第 9 篇），角度「股东人数选择对经营的影响」
