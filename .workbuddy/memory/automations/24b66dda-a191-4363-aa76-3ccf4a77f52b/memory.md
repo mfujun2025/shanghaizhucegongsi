@@ -421,3 +421,18 @@
 - 选题池：32 / 70，待用 38
 - 备注：config.local.json 未进入 git 暂存区（gitignore 完好）；无失败步骤、无异常；本篇正文 3448 字略超任务书 1800–2500，但硬门槛只看 <1500，不阻断
 - 事实依据（《上海市经营主体住所登记管理办法》第十/十三/十五条、《企业信息公示暂行条例》经营异常名录条款）已核官方原文，可复用
+
+## 2026-10-26（第 30 次执行；同日第二次）
+- 状态：✅ 全流程一次通过（校验/构建/自检/打包/部署/提交推送；零 error 零 warning）
+- 选题：`address-fee-range`，core「上海注册公司地址挂靠多少钱」，簇 address（第 3 篇），角度「地址费用的影响因素」
+- 产出：`_content/address-fee-range.md`，8 个 H2，2 张对照表，4 个引用块，7 条 FAQ，文末附 MLA 式公开资料
+- 指标：`_len`=3995，正文中文 3453 字，主词正文命中 **3 次**，密度 **0.451%**（0.3–0.6 理想带）
+- 落位：首段 1 + 收尾段 1 + FAQ 首问 1；H2 全程不含核心词，长尾「注册地址挂靠费用」进第二节标题（零追加计数）
+- 同簇防撞车：与 `no-address-solution`（三条路径）、`park-address-reliable`（核查清单）切分——本篇只讲价格决定因素与比价口径
+- 部署：Cloudflare Pages ✅ `https://3b1771af.shanghaizhucegongsi.pages.dev`（wrangler OAuth，`config.local.json` 仍不存在）
+- 线上核验（比对 title 而非状态码）：主域与 pages.dev 的 `/articles/address-fee-range/` 均返回自身 title
+- 提交：`d7a291d` 已推送 main；`git ls-remote origin main` 比对一致
+- 选题池：33 / 70，待用 37；下一篇 `address-inspection`「上海注册公司地址会被查吗」
+- 备注：config.local.json 未进入 git 暂存区（文件不存在，gitignore 完好）；无失败步骤、无异常
+- 经验：v1 写成 10 个 H2 / 4595 字导致密度跌破 0.3%；压缩到 8 个 H2 / 3453 字后密度回到 0.451%。
+  **多变体拆解类选题一开始就按 8 个 H2、每节 200 字规划，可省两轮返工**
