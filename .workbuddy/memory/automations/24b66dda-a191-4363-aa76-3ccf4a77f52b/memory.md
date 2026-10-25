@@ -393,3 +393,16 @@
 - 备注：config.local.json 未进入 git 暂存区（gitignore 完好）；无失败步骤、无异常
 
 
+## 2026-10-25（第 28 次执行）
+- 状态：✅ 全流程一次通过（校验/构建/自检/打包/部署/提交推送；零 error 零 warning）
+- 选题：`no-address-solution`，core「上海注册公司没有地址怎么办」，簇 address（**该簇首篇**），角度「三条路径对比与选择方法」
+- 产出：`_content/no-address-solution.md`，8 个 H2，1 张五列对照表，4 个引用块，7 条 FAQ，文末附 MLA 式公开资料
+- 指标：`_len`=4460，中文字 3844，主词正文命中 **3 次**，密度 **0.404%**（0.3–0.6 理想带）
+- 落位：首段 1 + 收尾节 1 + FAQ 首问 1；H2 全程避开核心词，内链锚文本用长尾变体
+- 定稿：首稿 4657 字 / 0.336%（超长且贴下限）→ 重写压缩到 3844 / 0.404%，一次过校验
+- 部署：Cloudflare Pages ✅ `https://28c41ab2.shanghaizhucegongsi.pages.dev`（wrangler OAuth 登录态）
+- 线上核验（比对 title 而非状态码）：主域与 pages.dev 的 `/articles/no-address-solution/` 均返回自身 title；`/articles/zzz-not-exist/` 返回首页 title
+- 提交：`09ebc46` 已推送 main；`git ls-remote origin main` 比对一致（1ed30c6..09ebc46）
+- 选题池：31 / 70，待用 39
+- 备注：config.local.json 未进入 git 暂存区（gitignore 完好）；无失败步骤、无异常
+- 事实依据（《上海市经营主体住所登记管理办法》第七/八/九/十/十三/十四/十五条等）已记入当日日志，可复用
