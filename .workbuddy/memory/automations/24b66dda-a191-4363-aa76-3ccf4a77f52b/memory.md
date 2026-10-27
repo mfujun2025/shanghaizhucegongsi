@@ -452,3 +452,21 @@
 - 提交：`f260403` 已推送 main；`git ls-remote origin main` 比对一致
 - 选题池：34 / 70，待用 36；下一篇 `central-registration`「上海注册公司集中登记地是什么」
 - 备注：config.local.json 未进入 git 暂存区（文件不存在，gitignore 完好）；无失败步骤、无异常
+
+## 2026-10-28（第 32 次执行）
+- 状态：✅ 全流程一次通过（校验/构建/自检/打包/部署/提交推送；零 error 零 warning）
+- 选题：`central-registration`，core「上海注册公司集中登记地是什么」，簇 address（第 5 篇），角度「集中登记地的政策概念与适用范围」
+- 产出：`_content/central-registration.md`，8 个 H2，3 张表（认定主体权限 / 三个限定 / 概念对照），3 个引用块，8 条 FAQ，文末 MLA 式资料
+- 指标：`_len`=4561，中文字 4047，主词正文命中 **3 次**，密度 **0.395%**（0.3–0.6 理想带内）
+- 落位：首段 1 + 收尾段 1 + FAQ 首问 1；H2 全程不含核心词，内链锚文本用长尾变体（规避 anchor id 与锚文本双计）
+- 同簇防撞车：与 `no-address-solution`（三条路径对比）、`park-address-reliable`（园区核查清单）、`address-fee-range`（价格变量）、
+  `address-inspection`（五类核查情形）切分——本篇只讲「这个制度概念本身：谁认定、限定什么、免什么材料、怎么核」
+- 事实核验：办法文号 **沪府办规〔2024〕2号**，2024-02-28 印发 / 2024-03-20 施行 / 有效期至 2029-03-19，废止沪府办发〔2015〕15号；
+  逐条比对第十条（含第二款管理义务）、十一、十三、十五、十七、六、九条
+- 部署：Cloudflare Pages ✅ `https://be4eb72d.shanghaizhucegongsi.pages.dev`（wrangler OAuth 登录态）
+- 线上核验（比对 title 而非状态码）：pages.dev 与主域 `/articles/central-registration/` 均返回自身 title 与正确 canonical；`/articles/zzz-not-exist/` 返回首页 title
+- 提交：`2ad23eb` 已推送 main（`f260403..2ad23eb`）；`git ls-remote origin main` 比对一致
+- 选题池：35 / 70，待用 35；下一篇「上海哪些行业不能用挂靠地址」（簇 address）
+- 备注：config.local.json 未进入 git 暂存区（文件不存在，gitignore 完好）；无失败步骤、无异常
+- 校准：正文 4047 中文字，仍超任务书 1800–2500 区间（硬门槛只查 <1500，不阻断）；下篇建议按 8 节 × 300 字规划，控制在 2800–3100
+- 提示：线上核验用 `curl -A <浏览器UA>`，python urllib 会被 Cloudflare 403 拦截，勿误判为站点故障
