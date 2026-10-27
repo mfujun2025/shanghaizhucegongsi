@@ -436,3 +436,19 @@
 - 备注：config.local.json 未进入 git 暂存区（文件不存在，gitignore 完好）；无失败步骤、无异常
 - 经验：v1 写成 10 个 H2 / 4595 字导致密度跌破 0.3%；压缩到 8 个 H2 / 3453 字后密度回到 0.451%。
   **多变体拆解类选题一开始就按 8 个 H2、每节 200 字规划，可省两轮返工**
+
+## 2026-10-27（第 31 次执行）
+- 状态：✅ 全流程一次通过（校验/构建/自检/打包/部署/提交推送；零 error 零 warning）
+- 选题：`address-inspection`，core「上海注册公司地址会被查吗」，簇 address（第 4 篇），角度「核查情形与合规应对方法」
+- 产出：`_content/address-inspection.md`，8 个 H2，2 张对照表（五类核查情形 / 分情形处置），1 个引用块，7 条 FAQ，文末 MLA 式资料
+- 指标：`_len`=4842，主词正文命中 **3 次**，密度 **0.372%**（0.3–0.6 带内，贴下沿但安全）
+- 落位：首段 1 + 第八节收尾 1 + FAQ 首问 1；H2 全程避开核心词，其中两节用长尾「工商上门核查注册地址」「地址异常怎么处理」
+- 同簇防撞车：与 `no-address-solution`（三条路径）、`park-address-reliable`（园区核查清单）、`address-fee-range`（价格六变量）
+  切分——本篇只讲「谁在什么情形下来查、查什么、失联后果、怎么处置」，三篇旧文各内链一次
+- 事实核验：上海住所办法第六/九/十/十四/十五/十六条、企业信息公示条例第九/十三/十四/十五/十七/十八条逐条比对官方原文；
+  注意条例第十七条的「住所无法联系」系修订后增列（2014 原文仅 2 项），引用时须写「现行版本」
+- 部署：Cloudflare Pages ✅ `https://fe2c486a.shanghaizhucegongsi.pages.dev`（wrangler OAuth 登录态）
+- 线上核验（比对 title 而非状态码）：pages.dev 与主域 `/articles/address-inspection/` 均返回自身 title；`/articles/zzz-not-exist/` 返回首页 title
+- 提交：`f260403` 已推送 main；`git ls-remote origin main` 比对一致
+- 选题池：34 / 70，待用 36；下一篇 `central-registration`「上海注册公司集中登记地是什么」
+- 备注：config.local.json 未进入 git 暂存区（文件不存在，gitignore 完好）；无失败步骤、无异常
