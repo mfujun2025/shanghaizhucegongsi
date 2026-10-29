@@ -470,3 +470,33 @@
 - 备注：config.local.json 未进入 git 暂存区（文件不存在，gitignore 完好）；无失败步骤、无异常
 - 校准：正文 4047 中文字，仍超任务书 1800–2500 区间（硬门槛只查 <1500，不阻断）；下篇建议按 8 节 × 300 字规划，控制在 2800–3100
 - 提示：线上核验用 `curl -A <浏览器UA>`，python urllib 会被 Cloudflare 403 拦截，勿误判为站点故障
+
+## 2026-10-29（第 33 次执行）
+- 状态：✅ 全流程一次通过（校验/构建/自检/打包/部署/提交推送；零 error 零 warning）
+- 选题：`industry-restriction`，core「上海哪些行业不能用挂靠地址」，簇 address（第 6 篇），角度「受限行业类型与判断依据」
+- 产出：`_content/industry-restriction.md`，9 个 H2，1 张表（项目类型×场地要求×可行性），3 个引用块，7 条 FAQ，文末说明段
+- 指标：`_len`=4779，中文字 4240，主词正文命中 **4 次**，密度 **0.502%**（0.3–0.6 理想带）
+- 落位：首段 1 + 三步自查收尾 1 + 收尾段 1 + FAQ 第 4 问 1；H2 全程不含核心词，内链锚文本用长尾变体
+- 结构：三分法（物理不适用/监管不允许/能注册但不建议）→ 经营范围入口（表）→ 五类受限 → 三步自查 → 四条替代路径
+- 同簇防撞车：与 `no-address-solution`（三路径）、`park-address-reliable`（园区核查）、`address-fee-range`（价格）、
+  `address-inspection`（核查情形）、`central-registration`（制度概念）切分——本篇只讲「行业这个维度：哪些不行、怎么判断」
+- 部署：Cloudflare Pages ✅ `https://be51b9fb.shanghaizhucegongsi.pages.dev`（wrangler OAuth 登录态）
+- 线上核验：pages.dev 与主域 `/articles/industry-restriction/` 均返回自身 title；`/articles/zzz-not-exist/` 返回首页 title
+- 提交：`907744e` 已推送 main（52 files changed）；`git ls-remote origin main` 比对一致
+- 选题池：36 / 70，待用 34；下一篇 `address-change`「上海注册公司地址可以变更吗」
+- 备注：config.local.json 未进入 git 暂存区（文件不存在，gitignore 完好）；无失败步骤、无异常
+- 校准：本篇 4240 中文字，仍超任务书 1800–2500（硬门槛只查 <1500）；下篇建议 8 节 × 300 字，压到 3000 上下
+
+## 2026-10-30（第 34 次执行）
+- 状态：✅ 全流程一次通过（校验/构建/自检/打包/部署/提交推送；零 error 零 warning）
+- 选题：`address-change`，core「上海注册公司地址可以变更吗」，簇 address（第 7 篇），角度「变更流程与注意事项」
+- 产出：`_content/address-change.md`，8 个 H2，2 张对照表（流程步骤卡点 / 同区跨区对比），4 个引用块，7 条 FAQ，文末 MLA 式公开资料（市场主体登记管理条例 24 条、上海住所办法 沪府办规〔2024〕2号）
+- 指标：`_len`=3025，主词「上海注册公司」正文命中 **3 次**，密度 **0.595%**（0.3–0.6 理想带正中）
+- 落位：首段 1（core 含主词）+「在上海注册公司之后…」小节 1 + FAQ 首问 1；**H2 全程避开核心词**，用长尾「公司地址变更流程」「注册地址变更怎么办理」做标题 → 规避 anchor id 双计
+- 同簇防撞车：与 `no-address-solution`（三路径）、`park-address-reliable`（园区核查）、`address-fee-range`（价格）、`address-inspection`（核查情形）、`central-registration`（制度概念）、`industry-restriction`（行业限制）切分——本篇只讲「地址变更这件事本身的流程、材料、同步事项与跨区差异」，五篇旧文各内链一次
+- 内链锚文本全部用长尾变体（集中登记地是什么意思/哪些行业不能用挂靠地址/园区地址挂靠可靠吗/没有地址怎么注册公司/注册地址会被核查吗），不含主词，规避锚文本计数
+- 部署：Cloudflare Pages ✅ `https://e83f326a.shanghaizhucegongsi.pages.dev`（wrangler OAuth 登录态，API Token 仍未配置）
+- 线上核验（比对 title 而非状态码）：主域与 pages.dev 的 `/articles/address-change/` 均返回自身 title；`/articles/zzz-not-exist/` 返回首页 title → 确认上线
+- 提交：待 push（本次运行末尾执行）；`git ls-remote origin main` 将比对一致性
+- 选题池：37 / 70，待用 33；下一篇 `cross-district-move`「上海注册公司跨区迁址怎么办理」
+- 备注：config.local.json 未进入 git 暂存区（文件不存在，gitignore 完好）；自检报 4 个导航页字数偏低属正常（shijian/wangshang/women/yinhang 非文章页，不设下限）；无失败步骤、无异常
