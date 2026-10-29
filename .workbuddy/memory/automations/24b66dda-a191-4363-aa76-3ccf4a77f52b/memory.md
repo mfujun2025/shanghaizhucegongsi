@@ -497,6 +497,6 @@
 - 内链锚文本全部用长尾变体（集中登记地是什么意思/哪些行业不能用挂靠地址/园区地址挂靠可靠吗/没有地址怎么注册公司/注册地址会被核查吗），不含主词，规避锚文本计数
 - 部署：Cloudflare Pages ✅ `https://e83f326a.shanghaizhucegongsi.pages.dev`（wrangler OAuth 登录态，API Token 仍未配置）
 - 线上核验（比对 title 而非状态码）：主域与 pages.dev 的 `/articles/address-change/` 均返回自身 title；`/articles/zzz-not-exist/` 返回首页 title → 确认上线
-- 提交：待 push（本次运行末尾执行）；`git ls-remote origin main` 将比对一致性
+- 提交：`615a3bf` 已推送 main（55 files changed）；`git ls-remote origin main` 比对一致（615a3bf…）
 - 选题池：37 / 70，待用 33；下一篇 `cross-district-move`「上海注册公司跨区迁址怎么办理」
 - 备注：config.local.json 未进入 git 暂存区（文件不存在，gitignore 完好）；自检报 4 个导航页字数偏低属正常（shijian/wangshang/women/yinhang 非文章页，不设下限）；无失败步骤、无异常
