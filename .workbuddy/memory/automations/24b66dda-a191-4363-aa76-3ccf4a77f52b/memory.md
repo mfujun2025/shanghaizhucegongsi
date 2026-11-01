@@ -500,3 +500,17 @@
 - 提交：`615a3bf` 已推送 main（55 files changed）；`git ls-remote origin main` 比对一致（615a3bf…）
 - 选题池：37 / 70，待用 33；下一篇 `cross-district-move`「上海注册公司跨区迁址怎么办理」
 - 备注：config.local.json 未进入 git 暂存区（文件不存在，gitignore 完好）；自检报 4 个导航页字数偏低属正常（shijian/wangshang/women/yinhang 非文章页，不设下限）；无失败步骤、无异常
+
+## 2026-10-31（第 35 次执行）
+- 状态：✅ 全流程一次通过（校验/构建/自检/打包/部署/提交推送；零 error 零 warning）
+- 选题：`cross-district-move`，core「上海注册公司跨区迁址怎么办理」，簇 address（第 8 篇），角度「迁址的税费与流程差异」
+- 产出：`_content/cross-district-move.md`，8 个 H2，2 张表（四步法定顺序 / 税费是否变化），3 个引用块，7 条 FAQ，文末 MLA 式资料
+- 指标：`_len`=4395，正文中文 3677 字，主词正文命中 **3 次**，密度 **0.410%**（0.3–0.6 理想带）
+- 落位：首段 1 + 第七节收尾 1 + FAQ 首问 1；H2 全程避开核心词，其中一节用「跨区迁址的实际路径」承接长尾
+- 同簇防撞车：`address-change` 只做过同区/跨区浅层对比，本篇专攻「工商与税务的法定先后顺序 + 纳税地点变化 + 属地协议风险」，内链 5 篇旧文（锚文本均长尾变体）
+- 事实核验：条例第 24/27 条、税务登记管理办法第 27/29 条、国办函〔2024〕53 号 + 沪 4 部门迁移登记"一件事"方案，均比对官方原文
+- 部署：Cloudflare Pages ✅ `https://0d19ca82.shanghaizhucegongsi.pages.dev`（wrangler OAuth 登录态）
+- 线上核验（比对 title 而非状态码）：pages.dev 与主域 `/articles/cross-district-move/` 均返回自身 title，canonical 正确
+- 提交：`1426314` 已推送 main（55 files changed）；`git ls-remote origin main` 比对一致（1e068d6..1426314）
+- 选题池：38 / 70，待用 32；下一篇 `tax-refund-policy`「上海园区返税政策是怎么回事」
+- 备注：config.local.json 未进入 git 暂存区（文件不存在，gitignore 完好）；无失败步骤、无异常
