@@ -513,4 +513,33 @@
 - 线上核验（比对 title 而非状态码）：pages.dev 与主域 `/articles/cross-district-move/` 均返回自身 title，canonical 正确
 - 提交：`1426314` 已推送 main（55 files changed）；`git ls-remote origin main` 比对一致（1e068d6..1426314）
 - 选题池：38 / 70，待用 32；下一篇 `tax-refund-policy`「上海园区返税政策是怎么回事」
+
+## 2026-11-02（第 36 次执行）
+- 状态：✅ 全流程一次通过（校验/构建/自检/打包/部署/提交推送；零 error 零 warning）
+- 选题：`virtual-address-legal`，core「上海注册公司虚拟地址合法吗」，簇 address（该簇第 9 篇），角度「合法性边界与合规使用方式」
+- 产出：`_content/virtual-address-legal.md`，9 个 H2，3 张对照表（含第 3 节三维度边界表），6 个引用块，7 条 FAQ，文末附 MLA 式公开资料（沪府办规〔2024〕2号）
+- 指标：`_len`=3288，正文中文 2884 字，主词「上海注册公司」正文命中 **3 次**，密度 **0.547%**（0.3–0.6 理想带）
+- 落位：首段 1 + 收尾段 1 + FAQ 首问 1；**H2 全程避开核心词**，长尾「虚拟地址合法吗」「注册公司虚拟地址」进 H2（规避 anchor id 双计与锚文本计数）
+- 同簇防撞车：与 `central-registration`（集中登记地概念）、`no-address-solution`（三条路径）、`park-address-reliable`（园区核查）、`industry-restriction`（行业限制）、`address-inspection`（核查情形）切分——本篇只讲"虚拟地址这个俗称的合法性边界：什么算合法、红线在哪、怎么自查"，开篇即声明与集中登记地概念的关系
+- 🐞 修复（本篇踩到）：frontmatter `desc`/`brief` 初稿用了 **ASCII 双引号** `"虚拟"`，导致 `content="..."` 属性被提前闭合，meta description 被截断成 18 字（自检报「描述偏短 18」）。
+  改为全角引号 `「虚拟」` 后重 build，自检 **无错误无提示** 通过。教训：frontmatter 文本里的引号一律用全角，别用 ASCII 双引号
+- 部署：Cloudflare Pages ✅ `https://eeb895cb.shanghaizhucegongsi.pages.dev`（wrangler OAuth 登录态，API Token 仍未配置）
+- 线上核验（比对 title+canonical 而非状态码）：主域 `xn--fhq55fzcr6i6s1crya.com/articles/virtual-address-legal/` 返回自身 title + 正确 canonical；`/articles/zzz-not-exist/` 返回首页 title → 确认上线
+- 提交：`2939992` 已推送 main（`17eee6e..2939992`）；`git ls-remote origin HEAD` 比对一致
+- 选题池：40 / 70，待用 30；下一篇 `上海注册贸易公司怎么办理`
+- 备注：config.local.json 未进入 git 暂存区（gitignore 完好）；无失败步骤、无异常
 - 备注：config.local.json 未进入 git 暂存区（文件不存在，gitignore 完好）；无失败步骤、无异常
+
+## 2026-11-03（第 37 次执行）
+- 状态：✅ 全流程一次通过（校验/构建/自检/打包/部署/提交推送；零 error 零 warning）
+- 选题：`trade-company`，core「上海注册贸易公司怎么办理」，簇 industry（**该簇首篇**），角度「贸易类的经营范围与资质要求」
+- 产出：`_content/trade-company.md`，9 个 H2，2 张对照表（一般/许可分类 / 贸易常见项目许可对照），2 个引用块，7 条 FAQ，文末附 MLA 式公开资料
+- 指标：`_len`=3697，主词「上海注册公司」正文命中 **3 次**，密度 **0.487%**（0.3–0.6 理想带）
+- 落位：首段 1 + 第六节 1 + FAQ 首问 1；H2 全程避开核心词，长尾「上海贸易公司经营范围」进第二节 H2 标题（规避 anchor id 双计与锚文本计数）
+- 长尾落位：三组长尾（上海贸易公司经营范围 / 注册贸易公司需要什么资质 / 上海怎么注册贸易公司）均覆盖 正文+FAQ，其中「上海贸易公司经营范围」完整命中 首段+正文+H2+FAQ；core 命中 H1+首段+FAQ
+- 同簇防撞车：industry 簇首篇，无可比对象；按"经营范围写法→许可区别→进出口资质链→注册资本/地址→自查"主线展开，未点名任何机构/园区/银行，无具体金额
+- 部署：Cloudflare Pages ✅ `https://c32f3809.shanghaizhucegongsi.pages.dev`（wrangler OAuth 登录态，API Token 仍未配置）
+- 线上核验（比对 title 而非状态码）：pages.dev 与主域 `xn--fhq55fzcr6i6s1crya.com/articles/trade-company/` 均返回自身 title；对照 `/articles/zzz-not-exist/` 返回首页 title → 确认上线
+- 提交：待执行 `git add -A` + commit + `git push origin HEAD`
+- 选题池：41 / 70，待用 29；下一篇 `tech-company`「上海注册科技公司流程」
+- 备注：config.local.json 未进入 git 暂存区（gitignore 完好）；无失败步骤、无异常
