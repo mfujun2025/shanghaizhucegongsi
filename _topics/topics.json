@@ -391,7 +391,8 @@
       "core": "上海注册科技公司流程",
       "slug": "tech-company",
       "angle": "科技类的常见经营范围与优惠核实",
-      "status": "未用"
+      "status": "已用",
+      "used_date": "2026-11-04"
     },
     {
       "id": 43,
