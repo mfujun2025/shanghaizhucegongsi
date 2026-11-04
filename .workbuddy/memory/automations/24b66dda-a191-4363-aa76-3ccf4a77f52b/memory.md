@@ -543,3 +543,16 @@
 - 提交：待执行 `git add -A` + commit + `git push origin HEAD`
 - 选题池：41 / 70，待用 29；下一篇 `tech-company`「上海注册科技公司流程」
 - 备注：config.local.json 未进入 git 暂存区（gitignore 完好）；无失败步骤、无异常
+
+## 2026-11-04（第 38 次执行）
+- 状态：✅ 全流程一次通过（校验/构建/自检/打包/部署/提交推送；零 error 零 warning）
+- 选题：`tech-company`，core「上海注册科技公司流程」，簇 industry（该簇第 2 篇），角度「科技类的常见经营范围与优惠核实」
+- 产出：`_content/tech-company.md`，9 个 H2，2 张对照表，3 个引用块，7 条 FAQ，文末附 MLA 式公开资料
+- 指标：`_len`=3968，主词「上海注册公司」正文命中 **3 次**，密度 **0.454%**（0.3–0.6 理想带）
+- 落位：首段 1 + 第一节 1 + 收尾 1；H2 全程避开主词（长尾「上海科技公司经营范围」进 H2，不含连续"上海注册公司"）；core/longtail 覆盖 H1+首段+H2+FAQ
+- 同簇防撞车：与 `trade-company` 切分——本篇专攻科技类特有资质（ICP/EDI/网文）+ 优惠核实（高企/研发加计），不重复经营范围通用写法
+- 部署：Cloudflare Pages ✅ `https://bd8084f2.shanghaizhucegongsi.pages.dev`（wrangler OAuth 登录态）
+- 线上核验（比对 title）：pages.dev 与主域 `/articles/tech-company/` 均返回自身 title → 确认上线
+- 提交：`960ad83` 已推送 main（`431300b..960ad83`）；**本提交一并补齐 11-03 trade-company 当轮"待执行"的提交**
+- 选题池：42 / 70，待用 28；下一篇待 `daily_publish.py next` 输出
+- 备注：config.local.json 未进入 git 暂存区（gitignore 完好）；无失败步骤、无异常；正文约 3497 中文字（超任务书 1800–2500，但硬门槛只看 <1500，不阻断）
