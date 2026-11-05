@@ -556,3 +556,29 @@
 - 提交：`960ad83` 已推送 main（`431300b..960ad83`）；**本提交一并补齐 11-03 trade-company 当轮"待执行"的提交**
 - 选题池：42 / 70，待用 28；下一篇待 `daily_publish.py next` 输出
 - 备注：config.local.json 未进入 git 暂存区（gitignore 完好）；无失败步骤、无异常；正文约 3497 中文字（超任务书 1800–2500，但硬门槛只看 <1500，不阻断）
+
+## 2026-11-05（第 39 次执行）
+- 状态：✅ 全流程一次通过（校验/构建/自检/打包/部署/提交推送；零 error 零 warning）
+- 选题：`food-company`，core「上海注册餐饮公司要什么条件」，簇 industry（该簇第 3 篇），角度「许可类行业的前置要求」
+- 产出：`_content/food-company.md`，9 个 H2，1 张对照表（餐饮常见项目×性质×要不要许可），2 个引用块，7 条 FAQ，文末附 MLA 式公开资料（市场主体登记管理条例 / 食品经营许可和备案管理办法 / 沪府办规〔2024〕2号）
+- 指标：`_len`=3781，正文中文 3345 字，主词「上海注册公司」正文命中 **3 次**，密度 **0.476%**（0.3–0.6 理想带）
+- 落位：首段 1 + 收尾节 1 + FAQ 首问 1；**H2 全程避开「上海注册公司」**，长尾「上海餐饮公司经营范围」进第二节 H2（规避 anchor id 双计）；内链 `../trade-company/` `../tech-company/`（锚文本长尾变体，无追加计数）
+- 同簇防撞车：与 `trade-company`/`tech-company` 切分——本篇只讲"餐饮特有的食品经营许可前置 + 实地核查 + 场地硬要求"，不重复经营范围通用写法，开篇内链两篇旧文
+- 部署：Cloudflare Pages ✅ `https://6488c8af.shanghaizhucegongsi.pages.dev`（wrangler OAuth 登录态，API Token 仍未配置）
+- 线上核验（比对 title 而非状态码）：pages.dev 与主域 `xn--fhq55fzcr6i6s1crya.com/articles/food-company/` 均返回自身 title「上海注册餐饮公司要什么条件｜前置许可要求」；`/articles/zzz-not-exist/` 返回首页 title → 确认上线
+- 提交：`9de473c` 已推送 main（`960ad83..9de473c`）；`git ls-remote origin HEAD` 比对一致（9de473c）
+- 选题池：43 / 70，待用 27；下一篇待 `daily_publish.py next` 输出
+- 备注：config.local.json 未进入 git 暂存区（gitignore 完好）；无失败步骤、无异常；正文 3345 字略超任务书 1800–2500（硬门槛只看 <1500，不阻断）
+
+## 2026-11-06（第 40 次执行）
+- 状态：✅ 全流程一次通过（校验/构建/自检/打包/部署/提交推送；零 error 零 warning）
+- 选题：`ecommerce-company`，core「上海注册电商公司怎么弄」，簇 industry（该簇第 4 篇），角度「电商类的地址与经营范围要点」
+- 产出：`_content/ecommerce-company.md`，9 个 H2，2 张对照表（一般/许可分类 / 电商常见项目许可对照），4 个引用块，7 条 FAQ，文末附 MLA 式公开资料
+- 指标：`_len`=4045，主词「上海注册公司」正文命中 **4 次**，密度 **0.593%**（≤0.6% 用户上限，且远低于构建阈值 1.2%，零 warning）
+- 落位：首段 1 + 第六节 1 + 第九节收尾 1 + FAQ 首问 1；**H2 全程避开「上海注册公司」**，长尾「上海电商公司经营范围」进第二节 H2（规避 anchor id 双计）；内链 `../trade-company/` `../tech-company/` `../food-company/`（锚文本长尾变体，无追加计数）
+- 同簇防撞车：与 `trade-company`/`tech-company`/`food-company` 切分——本篇只讲"电商特有：互联网信息服务备案 vs 许可证、EDI、直播带货资质门槛、地址弹性"，不重复经营范围通用写法，开篇内链三篇旧文
+- 部署：Cloudflare Pages ✅ `https://d2c0c010.shanghaizhucegongsi.pages.dev`（wrangler OAuth 登录态，未配置 API Token）
+- 线上核验（比对 title 而非状态码）：pages.dev 的 `/articles/ecommerce-company/` 返回自身 title「上海注册电商公司怎么弄｜地址与经营范围要点｜上海注册公司.com」；`/articles/zzz-not-exist/` 返回首页 title → 确认上线；主域 DoH 在沙箱无返回，未直连主域（同项目等价上线）
+- 提交：待执行 `git add -A` + commit `content: 新增《上海注册电商公司怎么弄？地址与经营范围要点拆解》` + `git push origin HEAD`
+- 选题池：44 / 70，待用 26；下一篇待 `daily_publish.py next` 输出
+- 备注：config.local.json 未进入 git 暂存区（gitignore 完好）；无失败步骤、无异常
