@@ -436,7 +436,8 @@
       "core": "上海注册咨询公司经营范围",
       "slug": "consulting-company",
       "angle": "咨询类的经营范围写法",
-      "status": "未用"
+      "status": "已用",
+      "used_date": "2026-11-09"
     },
     {
       "id": 48,

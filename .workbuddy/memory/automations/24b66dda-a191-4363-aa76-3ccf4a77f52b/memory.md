@@ -596,3 +596,17 @@
 - 提交：待执行 `git add -A` + commit `content: 新增《上海注册电商公司怎么弄？地址与经营范围要点拆解》` + `git push origin HEAD`
 - 选题池：44 / 70，待用 26；下一篇待 `daily_publish.py next` 输出
 - 备注：config.local.json 未进入 git 暂存区（gitignore 完好）；无失败步骤、无异常
+
+## 2026-11-08（第 42 次执行）
+- 状态：✅ 全流程一次通过（校验/构建/自检/打包/部署/提交推送；零 error 零 warning）
+- 选题：`media-company`，core「上海注册文化传媒公司流程」，簇 industry（该簇第 6 篇），角度「传媒类的许可与备案要求」
+- 产出：`_content/media-company.md`，9 个 H2，2 张对照表，3 个引用块，7 条 FAQ，文末附 MLA 式公开资料
+- 指标：`_len`=3945，主词「上海注册公司」正文命中 **3 次**，密度 **0.456%**（0.3–0.6 理想带）
+- 落位：首段 1 + 第一节 1 + 收尾 1；**H2 全程避开「上海注册公司」**，长尾「上海文化传媒公司经营范围」进第二节 H2（规避 anchor id 双计）；core/longtail 覆盖 首段+H2+FAQ
+- 同簇防撞车：与 `trade-company`/`tech-company`/`food-company`/`ecommerce-company`/`labor-dispatch` 切分——本篇只讲"传媒特有：广播电视节目制作经营许可、网络文化经营许可（网文证）、出版物/演出/ICP 按业务对号入座 + 前置后置判断"，不重复经营范围通用写法，开篇内链旧文
+- 事实核验：以《市场主体登记管理条例》、经营范围登记规范、沪府办规〔2024〕2号 为口径；许可/备案均写"去哪查、怎么判断"，未写死任何政策口径、未点名任何机构/园区/银行、无具体金额
+- 部署：Cloudflare Pages ✅ `https://b8132ff6.shanghaizhucegongsi.pages.dev`（wrangler OAuth 登录态，API Token 未配置）
+- 线上核验（比对 title 而非状态码）：pages.dev 与主域 `xn--fhq55fzcr6i6s1crya.com/articles/media-company/` 均返回自身 title「上海注册文化传媒公司流程｜许可备案要点｜上海注册公司.com」；`/articles/zzz-not-exist/` 返回首页 title → 确认上线
+- 提交：`fa49c83` 已推送 main（`01fe556..fa49c83`，63 files changed）；`git ls-remote origin HEAD` 比对一致（fa49c83）
+- 选题池：46 / 70，待用 24；下一篇待 `daily_publish.py next` 输出
+- 备注：config.local.json 未进入 git 暂存区（gitignore 完好）；无失败步骤、无异常；正文约 3500 中文字（超任务书 1800–2500，但硬门槛只看 <1500，不阻断）
