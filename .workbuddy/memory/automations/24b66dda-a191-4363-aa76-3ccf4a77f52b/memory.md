@@ -597,6 +597,19 @@
 - 选题池：44 / 70，待用 26；下一篇待 `daily_publish.py next` 输出
 - 备注：config.local.json 未进入 git 暂存区（gitignore 完好）；无失败步骤、无异常
 
+## 2026-11-09（第 43 次执行）
+- 状态：✅ 全流程一次通过（校验/构建/自检/打包/部署/提交推送；零 error 零 warning）
+- 选题：`consulting-company`，core「上海注册咨询公司经营范围」，簇 industry（该簇第 7 篇），角度「咨询类的经营范围写法与资质边界」
+- 产出：`_content/consulting-company.md`，9 个 H2，2 张对照表，4 个引用块，7 条 FAQ，文末 MLA 式说明段
+- 指标：`_len`=3409，主词「上海注册公司」正文命中 **3 次**，密度 **0.528%**（0.3–0.6 理想带）
+- 落位：首段 1 + 注册资本节 1 + 自查清单节 1；**H2 全程避开「上海注册公司」**，长尾「上海咨询公司经营范围」进第二节 H2（规避 anchor id 双计）；core 命中 H1+首段+FAQ，longtail 命中 H2+FAQ
+- 同簇防撞车：与 `trade/tech/food/ecommerce/labor-dispatch/media` 切分——本篇只讲"咨询类经营范围的写法：一般/许可边界、易踩资质红线的几类咨询、怎么自查"，不重复通用写法，开篇区分"能写"与"能干"
+- 部署：Cloudflare Pages ✅ `https://feb857f7.shanghaizhucegongsi.pages.dev`（wrangler OAuth 登录态，API Token 未配置）
+- 线上核验（比对 title 而非状态码）：pages.dev 的 `/articles/consulting-company/` 返回自身 title「上海注册咨询公司经营范围｜写法拆解｜上海注册公司.com」；`/articles/zzz-not-exist/` 返回首页 title → 确认上线
+- 提交：`ea5b7cd` 已推送 main（`fa49c83..ea5b7cd`，64 files changed）；`git ls-remote origin HEAD` 比对一致（ea5b7cd）
+- 选题池：47 / 70，待用 23；下一篇待 `daily_publish.py next` 输出
+- 备注：config.local.json 未进入 git 暂存区（gitignore 完好）；无失败步骤、无异常；正文约 3000 中文字（超任务书 1800–2500，但硬门槛只看 <1500，不阻断）
+
 ## 2026-11-08（第 42 次执行）
 - 状态：✅ 全流程一次通过（校验/构建/自检/打包/部署/提交推送；零 error 零 warning）
 - 选题：`media-company`，core「上海注册文化传媒公司流程」，簇 industry（该簇第 6 篇），角度「传媒类的许可与备案要求」
