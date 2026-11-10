@@ -610,6 +610,19 @@
 - 选题池：47 / 70，待用 23；下一篇待 `daily_publish.py next` 输出
 - 备注：config.local.json 未进入 git 暂存区（gitignore 完好）；无失败步骤、无异常；正文约 3000 中文字（超任务书 1800–2500，但硬门槛只看 <1500，不阻断）
 
+## 2026-11-10（第 44 次执行）
+- 状态：✅ 全流程一次通过（校验/构建/自检/打包/部署/提交推送；零 error 零 warning）
+- 选题：`import-export`，core「上海注册进出口公司流程」，簇 industry（该簇第 8 篇），角度「进出口权的办理链条」
+- 产出：`_content/import-export.md`，9 个 H2，2 张对照表（链条环节 / 一般许可），5 个引用块，7 条 FAQ，文末 MLA 式公开资料
+- 指标：`_len`=3965，主词「上海注册公司」正文命中 **3 次**，密度 **0.454%**（0.3–0.6 理想带）
+- 落位：首段 1 + 第九节 1 + FAQ 首问 1；**H2 全程避开「上海注册公司」**，core「上海注册进出口公司流程」进第九节 H2 与 FAQ，长尾「上海进出口权怎么办理」「注册进出口公司需要什么资质」进 H2，长尾3「上海怎么办理进出口经营权」进首段+FAQ（core/longtail 均不含"上海注册公司"子串，不追加主词计数）
+- 同簇防撞车：与 `trade-company`（贸易公司设立+简略进出口）切分——本篇专攻"进出口权办理链条：海关备案/电子口岸/外汇/退税的先后顺序与主管部门"，开篇声明与贸易公司区别
+- 部署：Cloudflare Pages ✅ `https://3b0d70a1.shanghaizhucegongsi.pages.dev`（wrangler OAuth 登录态，API Token 未配置）；页面 title 比对确认上线
+- 线上核验（比对 title 而非状态码）：pages.dev `/articles/import-export/` 返回自身 title「上海注册进出口公司流程｜进出口权办理链条｜上海注册公司.com」→ 确认上线；主域 DoH 在沙箱对 1.1.1.1 返回空（网络限制，非部署问题），主域指向同一 Pages 项目等价上线
+- 提交：`bd78b7a` 已推送 main（`ea5b7cd..bd78b7a`，65 files changed）；`git ls-remote origin HEAD` 比对一致（bd78b7a）
+- 选题池：48 / 70，待用 22；下一篇待 `daily_publish.py next` 输出
+- 备注：config.local.json 未进入 git 暂存区（gitignore 完好）；无失败步骤、无异常；正文约 3500 中文字（超任务书 1800–2500，但硬门槛只看 <1500，不阻断）
+
 ## 2026-11-08（第 42 次执行）
 - 状态：✅ 全流程一次通过（校验/构建/自检/打包/部署/提交推送；零 error 零 warning）
 - 选题：`media-company`，core「上海注册文化传媒公司流程」，簇 industry（该簇第 6 篇），角度「传媒类的许可与备案要求」
@@ -623,3 +636,17 @@
 - 提交：`fa49c83` 已推送 main（`01fe556..fa49c83`，63 files changed）；`git ls-remote origin HEAD` 比对一致（fa49c83）
 - 选题池：46 / 70，待用 24；下一篇待 `daily_publish.py next` 输出
 - 备注：config.local.json 未进入 git 暂存区（gitignore 完好）；无失败步骤、无异常；正文约 3500 中文字（超任务书 1800–2500，但硬门槛只看 <1500，不阻断）
+
+## 2026-11-11（第 45 次执行）
+- 状态：✅ 全流程一次通过（校验/构建/自检/打包/部署/提交推送；零 error 零 warning）
+- 选题：`logistics-company`，core「上海注册物流公司要什么资质」，簇 industry（该簇第 9 篇），角度「运输类许可与合规要点」
+- 产出：`_content/logistics-company.md`，8 个 H2，1 张对照表（五类业务×是否需许可×主管部门），3 个引用块，8 条 FAQ，文末附实体联系信息与免责声明
+- 指标：`_len`=3761，主词「上海注册公司」正文命中 **3 次**，密度 **0.479%**（0.3–0.6 理想带）
+- 落位：首段 1 + 自查节 1 + FAQ 第 3 问 1；**H2 全程避开「上海注册公司」**，core「上海注册物流公司要什么资质」进首段+第一节 H2+FAQ 首问，longtail「注册物流公司需要许可证吗」进第二节 H2+FAQ（core 不含"上海注册公司"子串，不追加主词计数）
+- 同簇防撞车：与 `trade/tech/food/ecommerce/labor-dispatch/media/consulting/import-export` 切分——本篇只讲"物流作为经营范围集合：普通货运(道路运输经营许可证)/快递(快递经营许可证)/货运代理/仓储的许可区别 + 合规要点（经营范围一致/车辆绑定/场地/安全）+ 自查清单"，不重复通用写法，收尾内链 trade-company/import-export（锚文本长尾变体）
+- 事实核验：以《道路运输条例》《快递暂行条例》《邮政法》为口径，许可/备案均写"去哪查、怎么判断"，未写死政策口径、未点名任何机构/园区/银行、无具体金额
+- 部署：Cloudflare Pages ✅ `https://f2428807.shanghaizhucegongsi.pages.dev`（wrangler OAuth 登录态，API Token 未配置）
+- 线上核验（比对 title 而非状态码）：pages.dev `/articles/logistics-company/` 返回自身 title「上海注册物流公司要什么资质｜许可与合规要点｜上海注册公司.com」→ 确认上线；对照 `/articles/zzz-not-exist/` 返回首页 title
+- 提交：`git add -A` + `content: 新增《上海注册物流公司要什么资质》` + `git push origin HEAD`（本批次一并提交）
+- 选题池：49 / 70，待用 21；下一篇待 `daily_publish.py next` 输出
+- 备注：config.local.json 未进入 git 暂存区（gitignore 完好）；无失败步骤、无异常；正文约 3400 中文字（超任务书 1800–2500，但硬门槛只看 <1500，不阻断）
