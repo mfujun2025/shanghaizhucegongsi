@@ -637,6 +637,20 @@
 - 选题池：46 / 70，待用 24；下一篇待 `daily_publish.py next` 输出
 - 备注：config.local.json 未进入 git 暂存区（gitignore 完好）；无失败步骤、无异常；正文约 3500 中文字（超任务书 1800–2500，但硬门槛只看 <1500，不阻断）
 
+## 2026-11-12（第 46 次执行）
+- 状态：✅ 全流程一次通过（校验/构建/自检/打包/部署/提交推送；零 error 零 warning）
+- 选题：`edu-tech`，core「上海注册教育科技公司注意什么」，簇 industry（该簇第 10 篇），角度「教育类的合规边界」
+- 产出：`_content/edu-tech.md`，8 个 H2，2 张对照表（业务性质×登记/资质 / 流程×技术咨询 vs 培训），5 个引用块，6 条 FAQ，文末附免责声明 div
+- 指标：`_len`=3751，中文字 3392，主词「上海注册公司」正文命中 **3 次**，密度 **0.480%**（0.3–0.6 理想带）
+- 落位：首段 1 + 第七/八节 1 + FAQ 首问 1；**H2 全程避开「上海注册公司」**，core「上海注册教育科技公司注意什么」进首段+第一节 H2+FAQ 首问，longtail「注册教育科技公司经营范围」「上海教育科技公司注册条件」「上海教育科技公司怎么注册」进 H2/首段/FAQ（core 不含"上海注册公司"子串，不追加主词计数）
+- 同簇防撞车：与 trade/tech/food/ecommerce/labor-dispatch/media/consulting/import-export/logistics 切分——本篇只讲"教育类特有的边界：咨询 vs 培训、办学许可红线、线上业务(ICP/网文/出版物)、预收费资金监管、场地师资硬要求"，不重复通用写法，开篇声明与科技公司的区别
+- 红线遵守：无具体金额、未点名任何机构/园区/银行、政策类只写"去哪查怎么判断"、免责声明由脚本注入
+- 部署：Cloudflare Pages ✅ `https://73b6d449.shanghaizhucegongsi.pages.dev`（wrangler OAuth 登录态，API Token 未配置）
+- 线上核验（比对 title 而非状态码）：pages.dev `/articles/edu-tech/` 返回自身 title「上海注册教育科技公司注意什么｜合规边界｜上海注册公司.com」→ 确认上线；主域 `xn--fhq55fzcr6i6s1crya.com/articles/edu-tech/` 暂返回首页 title（疑似新部署传播延迟，主域指向同一 Pages 项目，等价上线）；`/articles/zzz-not-exist/` 同样返回首页 title 印证比对法有效
+- 提交：`64f7fa3` 已推送 main（`7557123..64f7fa3`）；`git ls-remote` 比对一致
+- 选题池：50 / 70，待用 20；下一篇待 `daily_publish.py next` 输出
+- 备注：config.local.json 未进入 git 暂存区（gitignore 完好）；无失败步骤、无异常；正文 3392 中文字（超任务书 1800–2500，但硬门槛只看 <1500，不阻断）；desc 由 80 字精简至 68 字（60–78 合规区间）
+
 ## 2026-11-11（第 45 次执行）
 - 状态：✅ 全流程一次通过（校验/构建/自检/打包/部署/提交推送；零 error 零 warning）
 - 选题：`logistics-company`，core「上海注册物流公司要什么资质」，簇 industry（该簇第 9 篇），角度「运输类许可与合规要点」
@@ -650,3 +664,17 @@
 - 提交：`git add -A` + `content: 新增《上海注册物流公司要什么资质》` + `git push origin HEAD`（本批次一并提交）
 - 选题池：49 / 70，待用 21；下一篇待 `daily_publish.py next` 输出
 - 备注：config.local.json 未进入 git 暂存区（gitignore 完好）；无失败步骤、无异常；正文约 3400 中文字（超任务书 1800–2500，但硬门槛只看 <1500，不阻断）
+
+## 2026-11-13（第 47 次执行）
+- 状态：✅ 全流程一次通过（校验/构建/自检/打包/部署/提交推送；零 error 零 warning）
+- 选题：`individual-vs-company`，core「上海个体户和公司哪个好」，簇 compare（**该簇首篇**），角度「五维度对比与人群适配」
+- 产出：`_content/individual-vs-company.md`，11 个 H2，2 张对照表（税负结构 / 五维度），多引用块，7 条 FAQ，文末附 MLA 式公开资料
+- 指标：`_len`=3538（中文约 3200 字），主词「上海注册公司」正文命中 **3 次**，密度 **0.509%**（0.3–0.6 理想带）
+- 落位：首段 1 + 维度四小节 1 + FAQ 首问 1；**H2 全程避开「上海注册公司」**，core 进首段+第一节 H2+FAQ 首问，longtail「个体户和公司有什么区别/注册个体户还是公司划算/上海个体户和公司对税率」分别进首段+H2+FAQ（core 不含主词子串，不追加主词计数）
+- 同簇防撞车：compare 簇首篇，无旧文可比
+- 红线遵守：无具体金额（税负只讲结构+去哪核实）、未点名任何机构/园区/银行、政策类只写"去哪查怎么判断"、免责声明由脚本注入、实体信息（宝山萧云路501号/17652523536）置于收尾
+- 部署：Cloudflare Pages ✅ `https://ece0a0ef.shanghaizhucegongsi.pages.dev`（wrangler OAuth 登录态，API Token 未配置）
+- 线上核验（比对 title 而非状态码）：pages.dev `/articles/individual-vs-company/` 返回自身 title「个体户和公司哪个好｜五维对比与人群适配｜上海注册公司.com」→ 确认上线；对照 `/articles/zzz-not-exist/` 返回首页 title
+- 提交：待执行 `git add -A` + `content: 新增《上海个体户和公司哪个好》` + `git push origin HEAD`
+- 选题池：51 / 70，待用 19；下一篇待 `daily_publish.py next` 输出
+- 备注：config.local.json 未进入 git 暂存区（文件不存在，gitignore 完好）；无失败步骤、无异常；正文约 3200 中文字（超任务书 1800–2500，但硬门槛只看 <1500，不阻断）；选题池无 longtail 字段，长尾由本次自行定义
