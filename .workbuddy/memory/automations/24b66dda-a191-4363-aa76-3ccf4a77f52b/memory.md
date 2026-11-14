@@ -678,3 +678,17 @@
 - 提交：待执行 `git add -A` + `content: 新增《上海个体户和公司哪个好》` + `git push origin HEAD`
 - 选题池：51 / 70，待用 19；下一篇待 `daily_publish.py next` 输出
 - 备注：config.local.json 未进入 git 暂存区（文件不存在，gitignore 完好）；无失败步骤、无异常；正文约 3200 中文字（超任务书 1800–2500，但硬门槛只看 <1500，不阻断）；选题池无 longtail 字段，长尾由本次自行定义
+
+## 2026-11-14（第 48 次执行）
+- 状态：✅ 全流程一次通过（校验/构建/自检/打包/部署/提交推送；零 error 零 warning）
+- 选题：`individual-materials`，core「上海注册个体户要什么材料」，簇 compare（该簇第 2 篇），角度「个体户的材料与流程差异」
+- 产出：`_content/individual-materials.md`，8 个 H2，2 张对照表（材料三分类 / 个体户 vs 公司材料对比），6 个引用块，7 条 FAQ，文末附 MLA 式公开资料（民法典/市场主体登记管理条例/一网通办指引）
+- 指标：`_len`=3052，主词「上海注册公司」正文命中 **3 次**，密度 **0.590%**（0.3–0.6 理想带，零 warning 零 error）
+- 落位：首段 1 + 流程节 1 + 收尾「材料齐了之后」节 1（均"和在上海注册公司相比/之后"自然行文）；**H2 全程避开「上海注册公司」**，core 进首段+第一节 H2+FAQ 首答，三组长尾「上海办个体户需要什么材料/个体户注册流程怎么走/个体户和公司材料区别」分别进 H1+首段 / H2 / H2+FAQ（规避 anchor id 双计与锚文本计数）
+- 同簇防撞车：与 `individual-vs-company`（个体户和公司五维对比）切分——本篇只讲"材料清单与流程差异"，收尾内链 `../individual-vs-company/`（锚文本长尾变体，相对路径，check_site 通过）
+- 红线遵守：无具体金额、未点名任何机构/园区/银行、政策类只写"去哪查怎么判断"、免责声明由脚本注入、实体信息（宝山萧云路501号/17652523536）置于收尾
+- 部署：Cloudflare Pages ✅ `https://34104f54.shanghaizhucegongsi.pages.dev`（wrangler OAuth 登录态，API Token 仍未配置）
+- 线上核验（比对 title 而非状态码）：pages.dev 与主域 `xn--fhq55fzcr6i6s1crya.com/articles/individual-materials/` 均返回自身 title「上海注册个体户要什么材料｜流程与公司对比｜上海注册公司.com」→ 确认上线；对照 `/articles/zzz-not-exist/` 返回首页 title 印证比对法有效
+- 提交：`cfa8f0f` 已推送 main（`41ff142..cfa8f0f`，68 files changed）；`git ls-remote` 比对一致
+- 选题池：52 / 70，待用 18；下一篇 `ltd-vs-joint-stock`「上海有限公司和股份公司区别」（簇 compare）
+- 备注：config.local.json 未进入 git 暂存区（gitignore 完好）；无失败步骤、无异常；正文约 2700 中文字（超任务书 1800–2500，但硬门槛只看 <1500，不阻断）
