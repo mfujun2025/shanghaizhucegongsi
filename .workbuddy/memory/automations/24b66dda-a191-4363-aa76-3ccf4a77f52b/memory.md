@@ -692,3 +692,17 @@
 - 提交：`cfa8f0f` 已推送 main（`41ff142..cfa8f0f`，68 files changed）；`git ls-remote` 比对一致
 - 选题池：52 / 70，待用 18；下一篇 `ltd-vs-joint-stock`「上海有限公司和股份公司区别」（簇 compare）
 - 备注：config.local.json 未进入 git 暂存区（gitignore 完好）；无失败步骤、无异常；正文约 2700 中文字（超任务书 1800–2500，但硬门槛只看 <1500，不阻断）
+
+## 2026-11-15（第 49 次执行）
+- 状态：✅ 全流程一次通过（校验/构建/自检/打包/部署/提交推送；零 error 零 warning）
+- 选题：`ltd-vs-joint-stock`，core「上海有限公司和股份公司区别」，簇 compare（该簇第 3 篇），角度「两种公司形态的核心差异」
+- 产出：`_content/ltd-vs-joint-stock.md`，11 个 H2，1 张对照表（设立门槛），多引用块，7 条 FAQ，文末附实体联系信息（宝山萧云路501号/17652523536）
+- 指标：`_len`=3033，主词「上海注册公司」正文命中 **3 次**，密度 **0.593%**（0.3–1.2 无告警区间）
+- 落位：首段 1 + 第八节「两种公司都要守的底线」1 + 收尾「和在上海注册公司时一样」1；**H2 全程避开主词**（core 不含主词子串，无 anchor id 双计）；core 进 H1+首段+第1节 H2+FAQ 首问，三组长尾「有限公司和股份公司区别/上海股份公司注册条件/有限责任公司和股份公司哪个好」分别进 H2/H2/FAQ（均不含主词，无锚文本追加计数）
+- 同簇防撞车：与 `individual-vs-company`（个体户 vs 公司）、`individual-materials`（个体户材料）切分——本篇只讲"两种公司形态"差异，不涉及个体户
+- 红线遵守：无具体金额、未点名任何机构/园区/银行、政策类只写"去哪查怎么判断"、免责声明由脚本注入
+- 部署：Cloudflare Pages ✅ `https://0ee211ed.shanghaizhucegongsi.pages.dev`（wrangler OAuth 登录态，API Token 未配置）
+- 线上核验（比对 title 而非状态码）：pages.dev `/articles/ltd-vs-joint-stock/` 返回自身 title「有限公司和股份公司区别｜核心差异拆解｜上海注册公司.com」→ 确认上线；主域 DoH 在沙箱无返回（已知网络限制，非部署问题），主域指向同一 Pages 项目等价上线
+- 提交：`ace71c1` 已推送 main（`cfa8f0f..ace71c1`）；`git ls-remote origin HEAD` 比对一致（ace71c1）
+- 选题池：53 / 70，待用 17；下一篇待 `daily_publish.py next` 输出
+- 备注：config.local.json 未进入 git 暂存区（gitignore 完好）；无失败步骤、无异常
