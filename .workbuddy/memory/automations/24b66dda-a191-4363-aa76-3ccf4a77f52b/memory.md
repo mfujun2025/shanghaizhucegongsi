@@ -706,3 +706,12 @@
 - 提交：`ace71c1` 已推送 main（`cfa8f0f..ace71c1`）；`git ls-remote origin HEAD` 比对一致（ace71c1）
 - 选题池：53 / 70，待用 17；下一篇待 `daily_publish.py next` 输出
 - 备注：config.local.json 未进入 git 暂存区（gitignore 完好）；无失败步骤、无异常
+
+## 2026-11-16（第 50 次执行）
+- 状态：✅ 全流程一次通过（校验/构建/自检/打包/部署/提交推送；零 error 零 warning）
+- 选题：`branch-vs-subsidiary`，core「上海注册分公司和子公司区别」，簇 compare（第 4 篇），角度「责任承担与税务差异」
+- 指标：`_len`=3822，中文 3314 字，主词 3 次，密度 0.471%；9 H2 / 2 表 / 6 FAQ
+- 部署：✅ `https://5e9b3eb8.shanghaizhucegongsi.pages.dev`（wrangler OAuth）；线上 title+canonical 核验确认上线
+- 提交：`b8aea06` 已推送 main（71 files changed）
+- 选题池：54 / 70，待用 16；下一篇 `small-vs-general-taxpayer`「上海小规模和一般纳税人区别」
+- 备注：config.local.json 未进 git（gitignore 完好）；无失败步骤
