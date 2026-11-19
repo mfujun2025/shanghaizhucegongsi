@@ -715,3 +715,16 @@
 - 提交：`b8aea06` 已推送 main（71 files changed）
 - 选题池：54 / 70，待用 16；下一篇 `small-vs-general-taxpayer`「上海小规模和一般纳税人区别」
 - 备注：config.local.json 未进 git（gitignore 完好）；无失败步骤
+
+## 2026-11-18（第 51 次执行）
+- 状态：✅ 全流程一次通过（校验/构建/自检/打包/部署；零 error 零 warning）
+- 选题：`small-vs-general-taxpayer`，core「上海小规模和一般纳税人区别」，簇 compare（第 5 篇），角度「纳税身份的选择逻辑」
+- 指标：`_len`=3296，主词「上海注册公司」正文命中 **2 次**，密度 **0.364%**（0.3–0.6 理想带）；9 H2 / 2 表（专票对比 / 五步自查）/ 6 引用块 / 7 条 FAQ
+- 定稿过程：初稿主词 4 次 0.755%（H2 含主词被锚点 id 双计）→ H2 改长尾变体 + 删首段重复处 + FAQ 首答补 1 次 → 2 次 0.364%
+- 落位：首段 1 + 第八节「在上海注册公司后…」1；core 命中 H1+首段+第二节 H2+FAQ（新增 Q「区别大吗」）；H2 全程避开主词
+- 内容口径：征收率/税率档位/销售额标准一律不写死数值（红线 3），全部引导电子税务局/12366 核实；无具体金额、未点名任何机构
+- 部署：Cloudflare Pages ✅ `https://a263ecfd.shanghaizhucegongsi.pages.dev`（wrangler OAuth 登录态，69 files uploaded）
+- 线上核验（比对 title 而非状态码）：pages.dev 与主域 `xn--fhq55fzcr6i6s1crya.com/articles/small-vs-general-taxpayer/` 均返回自身 title，canonical 正确；对照 `/articles/zzz-not-exist/` 返回首页 title
+- 提交：`5a250a2` 已推送 main（`b8aea06..5a250a2`，73 files changed）；push 首次连接重置，重试成功（ls-remote 网络抖动失败，不影响推送结果）
+- 选题池：55 / 70，待用 15
+- 备注：config.local.json 未进 git（gitignore 完好）；无失败步骤
