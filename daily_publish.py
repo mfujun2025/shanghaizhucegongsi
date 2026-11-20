@@ -198,7 +198,7 @@ def cmd_publish():
     print("4/5  打包发布产物")
     print("=" * 56)
     rc, out = run([sys.executable, "pack_deploy.py"])
-    print(out.strip().split("\n")[-4] if out.strip() else "")
+    print("\n".join(out.strip().split("\n")[-4:]) if out.strip() else "")
     if rc != 0:
         print(out[-800:])
         print("\n❌ 打包失败")
