@@ -771,3 +771,17 @@
 - 提交：`41801ec` 已推送 main（`2160dc0..41801ec`，74 files changed）；本地与远端 HEAD 一致
 - 选题池：58 / 70，待用 12；下一篇 `subscribed-vs-paid`「上海注册公司认缴和实缴区别」（簇 compare）
 - 备注：config.local.json 未进 git（gitignore 完好）；无失败步骤、无异常；正文 3641 中文字超任务书 1800–2500（硬门槛只查 <1500，不阻断）
+
+## 2026-11-24（第 55 次执行）
+- 状态：✅ 全流程一次通过（校验/构建/自检/打包/部署/提交推送；零 error 零 warning）
+- 选题：`subscribed-vs-paid`，core「上海注册公司认缴和实缴区别」，簇 compare（第 9 篇），角度「出资方式的选择与风险」
+- 产出：`_content/subscribed-vs-paid.md`，9 H2 / 3 张表 / 多引用块 / 7 条 FAQ，文末 MLA 式公开资料 + 「事实与判断界限」声明
+- 指标：`_len`=4556，正文中文 4034 字，主词「上海注册公司」正文命中 **3 次**，密度 **0.395%**（0.3–0.6 理想带）；seo_title 16 / desc 76 合规
+- 落位：首段 core 1 + 收尾段 1 + FAQ 首问 core 1；**H2 全程避开主词**——core 本身含「上海注册公司」子串，进 H2 会被锚点 id 双计，长尾改用不含该子串的变体
+- 同簇防撞车：与 `capital-paid-in`（要不要实缴、写多少）切分——本篇专攻「出资方式差异、五年期限与存量过渡、实缴手续、催缴失权/加速到期/股权转让责任」的选择与风险；开篇内链过去（锚文本长尾变体）
+- 事实核验：公司法第47/48/49/50/51/52/53/54/88条 + 国务院令第784号第2条（2024-6-30 前设立公司须在 2027-6-30 前把剩余认缴期限调至 5 年内），经中国人大网/中国政府网/法院官网原文比对；「2032-6-30」非规定原文，未采用
+- 部署：Cloudflare Pages ✅ `https://a4c7608c.shanghaizhucegongsi.pages.dev`（wrangler OAuth 登录态，Uploaded 73 files/4.11s）
+- 线上核验（比对 title 而非状态码）：pages.dev `/articles/subscribed-vs-paid/` 返回自身 title「认缴和实缴区别｜出资方式选择拆解｜上海注册公司.com」；`/articles/zzz-not-exist/` 返回首页 title → 确认上线
+- 提交：`417ca69` 已推送 main（`41801ec..417ca69`，77 files changed）
+- 选题池：59 / 70，待用 11；下一篇 `sole-proprietorship-vs-ltd`「上海注册公司个人独资和有限公司区别」（簇 compare）
+- 备注：config.local.json 未进 git（gitignore 完好，check-ignore 验证）；无失败步骤、无异常；正文 4034 中文字超任务书 1800–2500（硬门槛只查 <1500，不阻断）
